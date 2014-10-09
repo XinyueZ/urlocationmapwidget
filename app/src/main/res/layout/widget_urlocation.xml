@@ -1,12 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/urlocation_ll"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/urlocation_iv"
+    <ProgressBar
+        android:layout_gravity="center"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</LinearLayout>
+        android:orientation="vertical"
+        android:layout_height="match_parent">
+
+
+        <ImageView
+            android:id="@+id/urlocation_iv"
+            android:src="@drawable/ic_launcher"
+            android:layout_width="match_parent"
+            android:background="@android:color/transparent"
+            android:layout_height="match_parent" />
+
+
+        <LinearLayout
+            android:layout_gravity="right|center_vertical"
+            android:layout_width="wrap_content"
+            android:background="@color/setting_bg"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/setting_btn"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_setting_btn"
+                android:layout_gravity="right|top"
+                android:background="@android:color/transparent" />
+
+            <ImageButton
+                android:id="@+id/locate_btn"
+                android:clickable="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_locate_btn"
+                android:layout_gravity="right|top"
+                android:background="@android:color/transparent" />
+        </LinearLayout>
+    </FrameLayout>
+
+</FrameLayout>

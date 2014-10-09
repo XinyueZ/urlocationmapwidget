@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Deine Position Widget</string>
+    <string name="application_name">Deine Position Widget</string>
+    <string name="lbl_google">Google Karte</string>
+    <string name="lbl_baidu">Baidu Karte(Nur in V.R China verfügbar)</string>
+    <string name="lbl_locate">Finde deine Position jetzt</string>
+    <string name="lbl_find_widget">Finde Widget</string>
+    <string name="msg_locate" >Lokalisiert…</string>
+    <string name="msg_stop_locate">Lokalisierung wird angehalten…</string>
+</resources>

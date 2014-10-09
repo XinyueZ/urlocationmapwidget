@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-
-    <string name="app_name">UrLocation</string>
-
+    <string name="app_name">Your Location Widget</string>
+    <string name="application_name">Your Location Widget</string>
+    <string name="lbl_google">Google Map</string>
+    <string name="lbl_baidu">Baidu Map(Only available for P.R China)</string>
+    <string name="lbl_locate">Find your current location now</string>
+    <string name="lbl_find_widget">Find Widget</string>
+    <string name="msg_locate">Locate your position…</string>
+    <string name="msg_stop_locate">Stop locating your position…</string>
 </resources>
