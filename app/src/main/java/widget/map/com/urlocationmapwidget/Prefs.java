@@ -12,6 +12,14 @@ import com.google.android.gms.maps.model.LatLng;
  */
 public final class Prefs extends BasicPrefs {
 	/**
+	 * Default zoom.
+	 */
+	private static final int DEFAULT_ZOOM_LEVEL = 19;
+	/**
+	 * Default interval.
+	 */
+	private static final int DEFAULT_INTERVAL = 3;
+	/**
 	 * Impl singleton pattern.
 	 */
 	private static Prefs sInstance;
@@ -31,6 +39,18 @@ public final class Prefs extends BasicPrefs {
 	 * Flag, whether location updating or not.
 	 */
 	private static final String KEY_LOCATION_UPDATES_ON = "location_update_on";
+	/**
+	 * Current zoom-level.
+	 */
+	private static final String KEY_ZOOM_LEVEL = "current_zoom_level";
+	/**
+	 * Location update interval.
+	 */
+	private static final String KEY_INTERVAL = "update_interval";
+	/**
+	 * Flag, whether app has been inited or not.
+	 */
+	private static final String KEY_INIT = "app_init";
 
 	/**
 	 * Created a DeviceData storage.
@@ -124,7 +144,7 @@ public final class Prefs extends BasicPrefs {
 	}
 
 	/**
-	 * Get map url with {@code zoom=18}.
+	 * Get map url with {@code zoom=}{@link #DEFAULT_ZOOM_LEVEL}.
 	 *
 	 * @param latlng
 	 * 		{@link com.google.android.gms.maps.model.LatLng} for center.
@@ -139,7 +159,7 @@ public final class Prefs extends BasicPrefs {
 	 * @return The final url to the static map.
 	 */
 	public String getMap(LatLng latlng, int width, int height) {
-		return getMap(latlng, width, height, 18);
+		return getMap(latlng, width, height, DEFAULT_ZOOM_LEVEL);
 	}
 
 	/**
@@ -167,5 +187,56 @@ public final class Prefs extends BasicPrefs {
 			return String.format(getUrlBaidu(), latlng.longitude + "", latlng.latitude + "", width + "", height + "",
 					zoom);
 		}
+	}
+
+	/**
+	 * Set current map zoom-level.
+	 *
+	 * @param zoomLevel
+	 * 		The zoom-level is (10-19)
+	 */
+	public void setZoomLevel(int zoomLevel) {
+		if (zoomLevel > 19) {
+			zoomLevel = 19;
+		} else if (zoomLevel < 10) {
+			zoomLevel = 10;
+		}
+		setInt(KEY_ZOOM_LEVEL, zoomLevel);
+	}
+
+	/**
+	 * Set map update interval in minute.
+	 *
+	 * @param interval
+	 * 		The interval is (3-30)minutes.
+	 */
+	public void setInterval(int interval) {
+		setInt(KEY_INTERVAL, interval);
+	}
+
+	/**
+	 * Get map current zoom-level
+	 *
+	 * @return The zoom-level is (6-19). Default is {@link #DEFAULT_ZOOM_LEVEL}.
+	 */
+	public int getZoomLevel() {
+		return getInt(KEY_ZOOM_LEVEL, DEFAULT_ZOOM_LEVEL);
+	}
+
+	/**
+	 * Get map update interval.
+	 *
+	 * @return The interval (3-30)minutes. Default is {@link #DEFAULT_INTERVAL}.
+	 */
+	public int getInterval() {
+		return getInt(KEY_INTERVAL, DEFAULT_INTERVAL);
+	}
+
+	public void setInit(boolean init) {
+		setBoolean(KEY_INIT, init);
+	}
+
+	public boolean isInit() {
+		return getBoolean(KEY_INIT, false);
 	}
 }

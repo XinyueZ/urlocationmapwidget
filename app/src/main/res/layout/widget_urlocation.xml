@@ -33,22 +33,38 @@
 
             <ImageButton
                 android:id="@+id/setting_btn"
-                android:clickable="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:src="@drawable/ic_setting_btn"
-                android:layout_gravity="right|top"
-                android:background="@android:color/transparent" />
+                style="@style/Widget_ImageButton" />
+
+            <ImageButton
+                android:id="@+id/update_btn"
+                android:src="@drawable/ic_only_refresh_btn"
+                style="@style/Widget_ImageButton"
+                />
+
+            <ImageButton
+                android:id="@+id/update_freq_btn"
+                android:src="@drawable/ic_update_freq_btn"
+                style="@style/Widget_ImageButton"/>
 
             <ImageButton
                 android:id="@+id/locate_btn"
-                android:clickable="true"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:src="@drawable/ic_locate_btn"
-                android:layout_gravity="right|top"
-                android:background="@android:color/transparent" />
+                style="@style/Widget_ImageButton" />
+
+            <ImageButton
+                android:id="@+id/zoom_in_btn"
+                android:src="@drawable/ic_zoom_in_btn"
+                style="@style/Widget_ImageButton" />
+
+            <ImageButton
+                android:id="@+id/zoom_out_btn"
+                android:src="@drawable/ic_zoom_out_btn"
+                style="@style/Widget_ImageButton"  />
+
         </LinearLayout>
+
+
     </FrameLayout>
 
 </FrameLayout>

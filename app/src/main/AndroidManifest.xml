@@ -42,6 +42,12 @@
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="widget.map.com.urlocationmapwidget.SETTING" />
                 <action android:name="widget.map.com.urlocationmapwidget.LOCATE" />
+                <action android:name="widget.map.com.urlocationmapwidget.ZOOM_IN" />
+                <action android:name="widget.map.com.urlocationmapwidget.ZOOM_OUT" />
+                <action android:name="widget.map.com.urlocationmapwidget.UPDATE" />
+                <action android:name="widget.map.com.urlocationmapwidget.ENABLE_LOCATING"/>
+                <action android:name="widget.map.com.urlocationmapwidget.CLICK_MAP"/>
+
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"

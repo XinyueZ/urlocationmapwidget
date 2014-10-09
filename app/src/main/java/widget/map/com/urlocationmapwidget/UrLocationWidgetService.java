@@ -1,5 +1,7 @@
 package widget.map.com.urlocationmapwidget;
 
+import java.util.concurrent.TimeUnit;
+
 import android.app.Service;
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
@@ -25,6 +27,8 @@ import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.model.LatLng;
 
+import de.greenrobot.event.EventBus;
+
 /**
  * Provide location for widget.
  *
@@ -32,68 +36,82 @@ import com.google.android.gms.maps.model.LatLng;
  */
 public final class UrLocationWidgetService extends Service implements ConnectionCallbacks, OnConnectionFailedListener,
 		LocationListener, ImageListener {
-	// Milliseconds per second
-	private static final int MILLISECONDS_PER_SECOND = 1000;
-	// Update frequency in seconds
-	public static final int UPDATE_INTERVAL_IN_SECONDS = 5 * 60;
-	// Update frequency in milliseconds
-	private static final long UPDATE_INTERVAL = MILLISECONDS_PER_SECOND * UPDATE_INTERVAL_IN_SECONDS;
-	// The fastest update frequency, in seconds
-	private static final int FASTEST_INTERVAL_IN_SECONDS = 1;
-	// A fast frequency ceiling in milliseconds
-	private static final long FASTEST_INTERVAL = MILLISECONDS_PER_SECOND * FASTEST_INTERVAL_IN_SECONDS;
+	/**
+	 * Location provider.
+	 */
+	private LocationClient mLocationClient;
+	/**
+	 * Query for a location.
+	 */
+	private LocationRequest mLocationRequest;
+	/**
+	 * Get screen's size for widget's max resize.
+	 */
+	private ScreenSize mScreenSize;
 
-	LocationClient mLocationClient;
-	LocationRequest mLocationRequest;
+	//------------------------------------------------
+	//Subscribes, event-handlers
+	//------------------------------------------------
 
-	ScreenSize mScreenSize;
+	/**
+	 * Handler for {@link widget.map.com.urlocationmapwidget.UpdateEvent}.
+	 *
+	 * @param e
+	 * 		Event {@link widget.map.com.urlocationmapwidget.UpdateEvent}.
+	 */
+	public void onEvent(UpdateEvent e) {
+		if (mLocationClient != null && mLocationClient.isConnected() && mLocationRequest != null) {
+			mLocationClient.requestLocationUpdates(mLocationRequest, this);
+		}
+	}
 
+	//------------------------------------------------
+
+	/**
+	 * Constructor of {@link UrLocationWidgetService}, no usage.
+	 */
 	public UrLocationWidgetService() {
 	}
 
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
-
+		EventBus.getDefault().register(this);
+		Prefs prefs = Prefs.getInstance(getApplicationContext());
 		mScreenSize = DeviceUtils.getScreenSize(this);
-		/*
-		 * Create a new location client, using the enclosing class to
-         * handle callbacks.
-         */
 		mLocationClient = new LocationClient(this, this, this);
-		// Create the LocationRequest object
 		mLocationRequest = LocationRequest.create();
-		// Use high accuracy
-		mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
-		// Set the update interval to 5 seconds
-		mLocationRequest.setInterval(UPDATE_INTERVAL);
-		// Set the fastest update interval to 1 second
-		mLocationRequest.setFastestInterval(FASTEST_INTERVAL);
-
+		mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
+		int interval = prefs.getInterval();
+		mLocationRequest.setInterval(TimeUnit.MINUTES.toMillis(interval));
+		mLocationRequest.setFastestInterval(TimeUnit.MINUTES.toMillis(1));
 		mLocationClient.connect();
 
-
-		Prefs.getInstance(getApplication()).setLocationUpdating(true);
-
-		RemoteViews views = new RemoteViews(getPackageName(), R.layout.widget_urlocation);
-		views.setImageViewResource(R.id.locate_btn, R.drawable.ic_no_locate_btn);
-		ComponentName thisWidget = new ComponentName(this, UrLocationWidgetProvider.class);
-		AppWidgetManager.getInstance(this).updateAppWidget(thisWidget, views);
-
+		prefs.setLocationUpdating(true);
+		setLocateButton(R.drawable.ic_no_locate_btn);
 		Utils.showLongToast(this, R.string.msg_locate);
 
 		return super.onStartCommand(intent, flags, startId);
 	}
 
-	@Override
-	public void onDestroy() {
-		Utils.showLongToast(this, R.string.msg_stop_locate);
-
-		Prefs.getInstance(getApplication()).setLocationUpdating(false);
-
+	/**
+	 * Set icon on the locate-button on the widget.
+	 *
+	 * @param drawableResId
+	 * 		The resId for the icon.
+	 */
+	private void setLocateButton(int drawableResId) {
 		RemoteViews views = new RemoteViews(getPackageName(), R.layout.widget_urlocation);
-		views.setImageViewResource(R.id.locate_btn, R.drawable.ic_locate_btn);
+		views.setImageViewResource(R.id.locate_btn, drawableResId);
 		ComponentName thisWidget = new ComponentName(this, UrLocationWidgetProvider.class);
 		AppWidgetManager.getInstance(this).updateAppWidget(thisWidget, views);
+	}
+
+	@Override
+	public void onDestroy() {
+		EventBus.getDefault().unregister(this);
+		Utils.showLongToast(this, R.string.msg_stop_locate);
+		Prefs.getInstance(getApplication()).setLocationUpdating(false);
+		setLocateButton(R.drawable.ic_locate_btn);
 
 		if (mLocationClient.isConnected()) {
 			mLocationClient.removeLocationUpdates(this);
@@ -125,8 +143,9 @@ public final class UrLocationWidgetService extends Service implements Connection
 
 	@Override
 	public void onLocationChanged(Location location) {
-		String url = Prefs.getInstance(getApplication()).getMap(new LatLng(location.getLatitude(),
-				location.getLongitude()), mScreenSize.Width, mScreenSize.Height);
+		Prefs prefs = Prefs.getInstance(getApplication());
+		String url = prefs.getMap(new LatLng(location.getLatitude(), location.getLongitude()), mScreenSize.Width,
+				mScreenSize.Height, prefs.getZoomLevel());
 		LL.d(String.format("Map from :%s", url));
 		TaskHelper.getImageLoader().get(url, this);
 	}

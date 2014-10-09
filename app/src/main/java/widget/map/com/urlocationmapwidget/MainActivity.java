@@ -6,27 +6,30 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.RadioButton;
-import android.widget.Switch;
+import android.widget.TextView;
 
 import com.chopping.activities.BaseActivity;
 import com.chopping.application.BasicPrefs;
 
 import widget.map.com.urlocationmapwidget.AnimImageButton.OnAnimImageButtonClickedListener;
 
+import static widget.map.com.urlocationmapwidget.UrLocationWidgetProvider.ACTION_ENABLE_LOCATING;
+
 /**
  * Main view for the application, you can select different map types.
  *
  * @author Xinyue Zhao
  */
-public final class MainActivity extends BaseActivity implements OnCheckedChangeListener {
+public final class MainActivity extends BaseActivity {
 	/**
-	 * Open/close locating.
+	 * Main layout for this component.
 	 */
-	private Switch mLocateSw;
-
+	private static final int LAYOUT = R.layout.activity_main;
+	/**
+	 * Show some message.
+	 */
+	private TextView msgTv;
 	/**
 	 * Show single instance of {@link}
 	 *
@@ -42,16 +45,12 @@ public final class MainActivity extends BaseActivity implements OnCheckedChangeL
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
-
+		setContentView(LAYOUT);
+		msgTv = (TextView) findViewById(R.id.msg_tv);
 		((RadioButton) findViewById(R.id.google_radio)).setChecked(Prefs.getInstance(getApplication())
 				.getCurrentMap() == 0);
 		((RadioButton) findViewById(R.id.baidu_radio)).setChecked(Prefs.getInstance(getApplication()).getCurrentMap() ==
 				1);
-		mLocateSw = (Switch) findViewById(R.id.locate_sw);
-		mLocateSw.setEnabled(false);
-		mLocateSw.setChecked(Prefs.getInstance(getApplication()).isLocationUpdating());
-		mLocateSw.setOnCheckedChangeListener(this);
 
 		findViewById(R.id.apply_widget_btn).setOnClickListener(new OnAnimImageButtonClickedListener() {
 			@Override
@@ -102,32 +101,19 @@ public final class MainActivity extends BaseActivity implements OnCheckedChangeL
 	}
 
 
-	/**
-	 * Called when the checked state of a compound button has changed.
-	 *
-	 * @param buttonView
-	 * 		The compound button view whose state has changed.
-	 * @param isChecked
-	 * 		The new checked state of buttonView.
-	 */
-	@Override
-	public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-		if (isChecked) {
-			startService(new Intent(this, UrLocationWidgetService.class));
-		} else {
-			stopService(new Intent(this, UrLocationWidgetService.class));
-		}
-	}
-
 	@Override
 	protected void onAppConfigLoaded() {
 		super.onAppConfigLoaded();
-		mLocateSw.setEnabled(true);
+		Prefs.getInstance(getApplication()).setInit(true);
+		msgTv.setText(R.string.lbl_app_init_done);
+		sendBroadcast(new Intent(ACTION_ENABLE_LOCATING));
 	}
 
 	@Override
 	protected void onAppConfigIgnored() {
 		super.onAppConfigIgnored();
-		mLocateSw.setEnabled(true);
+		msgTv.setText(R.string.lbl_app_init_done);
+		Prefs.getInstance(getApplication()).setInit(true);
+		sendBroadcast(new Intent(ACTION_ENABLE_LOCATING));
 	}
 }
