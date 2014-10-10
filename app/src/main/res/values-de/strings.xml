@@ -8,12 +8,14 @@
     <string name="lbl_app_init_done">Initialisiert…</string>
     <string name="lbl_minutes">%s Minute(n)</string>
     <string name="lbl_priority">Priorität</string>
+    <string name="lbl_introduce_app">Eine gute App stelle ich hier vor!</string>
+    <string name="lbl_share_app_content">Widget, deine Location auf dem Home-Screen zu zeigen. \n\nDownload: market://details?id=widget.map.com.urlocationmapwidget</string>
     <string-array name="array_priorities">
         <item>Genauigkeit (fein, beste, hoch)</item>
         <item>ausgewogene Energie Genauigkeit</item>
         <item>grobe, schlechte, niedrige Energie</item>
     </string-array>
-    <string name="msg_locate" >Lokalisiert…</string>
+    <string name="msg_locate">Lokalisiert…</string>
     <string name="msg_stop_locate">Lokalisierung wird angehalten…</string>
 
     <!-- External Apps -->
@@ -21,4 +23,14 @@
     <string name="extapp_download">gratis</string>
     <string name="extapp_buy">Kuafen</string>
     <string name="extapp_open">öffnen</string>
+
+    <string name="menu_share_app">Teile diese App</string>
+    <string name="menu_about">Über mich</string>
+
+    <string name="btn_confirm">Sicher</string>
+    <string name="btn_agree">Stimme zu.</string>
+    <string name="btn_not_agree">Stimme nicht zu.</string>
+
+        <string name="lbl_play_service">Diese App braucht Google Play Service, Sie müssen erst herunterladen dann
+        weiter.</string>
 </resources>

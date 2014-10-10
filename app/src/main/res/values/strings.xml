@@ -9,12 +9,14 @@
     <string name="lbl_interval">Update interval</string>
     <string name="lbl_minutes">%s minute(s)</string>
     <string name="lbl_priority">Priority</string>
+    <string name="lbl_introduce_app">Introduce you a good App!</string>
+    <string name="lbl_share_app_content">Widget to show your location on your Home-Screen. \n\nDownload: market://details?id=widget.map.com.urlocationmapwidget</string>
     <string-array name="array_priorities">
         <item>Fine, best, high accuracy</item>
         <item>Balanced power accuracy</item>
         <item>Coarse, worst, low power</item>
     </string-array>
-    <string name="msg_locate">Locate your position…</string>
+    <string name="msg_locate">Locating…</string>
     <string name="msg_stop_locate">Stop locating your position…</string>
 
     <!-- External Apps -->
@@ -22,4 +24,28 @@
     <string name="extapp_download">Inst.</string>
     <string name="extapp_buy">Buy</string>
     <string name="extapp_open">Start</string>
+
+    <string name="menu_share_app">Share this</string>
+    <string name="menu_about">About</string>
+
+    <!-- Shown in the 'About' window of the app. -->
+    <string name="about_body">&lt;b&gt;%1$s &lt;/b&gt;&lt;br&gt;Version %2$s &lt;br&gt;</string>
+    <!-- Shown as a link in the About screen of the app; user can click it to see the licenses. -->
+    <string name="about_licenses">Open Source Licenses</string>
+    <!-- Shown as a link in the About screen of the app; user can click to see the EULA. -->
+    <string name="about_eula">End User License Agreement</string>
+    <string name="about_eula_legal_text">Your use of this application is governed by a)Activating permissions of
+        hardware that the features of this application need and work well. b)The Google Terms of
+        Service (http://www.google.com/intl/en/policies/terms/), Google\'s Privacy
+        Policy(http://www.google.com/intl/en/policies/privacy/). c)Any applicable Google service-specific terms of service of privacy
+        policies. Google\'s terms of service and privacy policies may be updated from time to time and without
+        notice.\n\n\nBy using the application, your agree to the use of your data and permissions of your hardware in
+        accordance with Google\'s Privacy Policy and Google Terms of Service.</string>
+
+    <string name="btn_confirm">Confirm</string>
+    <string name="btn_ok">Ok</string>
+    <string name="btn_agree">I agree.</string>
+    <string name="btn_not_agree">I do not agree.</string>
+    <string name="play_service_url">market://details?id=com.google.android.gms</string>
+    <string name="lbl_play_service">This application needs Google Play Service, you must install it first.</string>
 </resources>
