@@ -32,6 +32,7 @@
 package widget.map.com.urlocationmapwidget;
 
 import android.app.Application;
+import android.content.Intent;
 
 import com.chopping.net.TaskHelper;
 
@@ -59,6 +60,11 @@ public final class App extends Application {
 	@Override
 	public void onCreate() {
 		TaskHelper.init(getApplicationContext());
+
+		Prefs prefs = Prefs.getInstance(this);
+		if (prefs.isLocationUpdating()) {
+			startService(new Intent(this, UrLocationWidgetService.class));
+		}
 	}
 
 }

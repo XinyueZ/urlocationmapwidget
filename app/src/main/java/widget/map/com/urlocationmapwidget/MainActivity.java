@@ -22,6 +22,7 @@ import android.widget.TextView;
 
 import com.chopping.activities.BaseActivity;
 import com.chopping.application.BasicPrefs;
+import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
@@ -96,6 +97,7 @@ public final class MainActivity extends BaseActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		Crashlytics.start(this);
 		setContentView(LAYOUT);
 		msgTv = (TextView) findViewById(R.id.msg_tv);
 		msgPb = findViewById(R.id.msg_pb);
