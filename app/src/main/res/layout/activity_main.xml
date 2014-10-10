@@ -22,6 +22,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
 
+        <ProgressBar
+            android:id="@+id/msg_pb"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:indeterminate="true"
+            android:indeterminateBehavior="repeat" />
+
+
         <RadioGroup
             android:id="@+id/map_type_group"
             android:layout_width="wrap_content"
@@ -46,29 +55,6 @@
 
 
         </RadioGroup>
-
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:textAppearance="?android:attr/textAppearanceMedium"
-                android:layout_height="match_parent"
-                android:layout_width="wrap_content"
-                android:text="@string/lbl_find_widget"
-                android:gravity="center_vertical"
-                android:background="@android:color/transparent" />
-
-            <widget.map.com.urlocationmapwidget.AnimImageButton
-                android:id="@+id/apply_widget_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:src="@drawable/ic_apply_widget_btn"
-                android:background="@android:color/transparent" />
-        </LinearLayout>
 
 
     </LinearLayout>

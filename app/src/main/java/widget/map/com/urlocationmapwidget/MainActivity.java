@@ -1,7 +1,5 @@
 package widget.map.com.urlocationmapwidget;
 
-import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,8 +9,6 @@ import android.widget.TextView;
 
 import com.chopping.activities.BaseActivity;
 import com.chopping.application.BasicPrefs;
-
-import widget.map.com.urlocationmapwidget.AnimImageButton.OnAnimImageButtonClickedListener;
 
 import static widget.map.com.urlocationmapwidget.UrLocationWidgetProvider.ACTION_ENABLE_LOCATING;
 
@@ -27,9 +23,13 @@ public final class MainActivity extends BaseActivity {
 	 */
 	private static final int LAYOUT = R.layout.activity_main;
 	/**
-	 * Show some message.
+	 * Show some messages.
 	 */
 	private TextView msgTv;
+	/**
+	 * Progress indicator for some messages.
+	 */
+	private View msgPb;
 
 	/**
 	 * Show single instance of {@link MainActivity}
@@ -48,20 +48,11 @@ public final class MainActivity extends BaseActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(LAYOUT);
 		msgTv = (TextView) findViewById(R.id.msg_tv);
+		msgPb = findViewById(R.id.msg_pb);
 		((RadioButton) findViewById(R.id.google_radio)).setChecked(Prefs.getInstance(getApplication())
 				.getCurrentMap() == 0);
 		((RadioButton) findViewById(R.id.baidu_radio)).setChecked(Prefs.getInstance(getApplication()).getCurrentMap() ==
 				1);
-
-		findViewById(R.id.apply_widget_btn).setOnClickListener(new OnAnimImageButtonClickedListener() {
-			@Override
-			public void onClick() {
-				Intent pickIntent = new Intent(AppWidgetManager.ACTION_APPWIDGET_PICK);
-				pickIntent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, new ComponentName(MainActivity.this,
-						UrLocationWidgetProvider.class));
-				startActivityForResult(pickIntent, 0x90);
-			}
-		});
 	}
 
 
@@ -88,7 +79,7 @@ public final class MainActivity extends BaseActivity {
 	 * 		No usage.
 	 */
 	public void selectGoogle(View view) {
-		Prefs.getInstance(getApplication()).setCurrentMap(0);
+		Prefs.getInstance(getApplication()).setCurrentMap(Prefs.GOOGLE_MAP);
 	}
 
 	/**
@@ -98,7 +89,7 @@ public final class MainActivity extends BaseActivity {
 	 * 		No usage.
 	 */
 	public void selectBaidu(View view) {
-		Prefs.getInstance(getApplication()).setCurrentMap(1);
+		Prefs.getInstance(getApplication()).setCurrentMap(Prefs.BAIDU_MAP);
 	}
 
 
@@ -107,6 +98,7 @@ public final class MainActivity extends BaseActivity {
 		super.onAppConfigLoaded();
 		Prefs.getInstance(getApplication()).setInit(true);
 		msgTv.setText(R.string.lbl_app_init_done);
+		msgPb.setVisibility(View.GONE);
 		sendBroadcast(new Intent(ACTION_ENABLE_LOCATING));
 	}
 
@@ -114,6 +106,7 @@ public final class MainActivity extends BaseActivity {
 	protected void onAppConfigIgnored() {
 		super.onAppConfigIgnored();
 		msgTv.setText(R.string.lbl_app_init_done);
+		msgPb.setVisibility(View.GONE);
 		Prefs.getInstance(getApplication()).setInit(true);
 		sendBroadcast(new Intent(ACTION_ENABLE_LOCATING));
 	}

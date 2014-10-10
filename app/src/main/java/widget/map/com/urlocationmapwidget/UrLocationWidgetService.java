@@ -145,8 +145,13 @@ public final class UrLocationWidgetService extends Service implements Connection
 	@Override
 	public void onLocationChanged(Location location) {
 		Prefs prefs = Prefs.getInstance(getApplication());
-		String url = prefs.getMap(new LatLng(location.getLatitude(), location.getLongitude()), mScreenSize.Width,
-				mScreenSize.Height, prefs.getZoomLevel());
+
+		//Baidu can not accept size more than 1024! We needs width == height.
+		String url = prefs.getMap(new LatLng(location.getLatitude(), location.getLongitude()),
+				prefs.getCurrentMap() == Prefs.BAIDU_MAP ? (mScreenSize.Width > 1000 ? 1000 : mScreenSize.Width) :
+						mScreenSize.Width,
+				prefs.getCurrentMap() == Prefs.BAIDU_MAP ? (mScreenSize.Width > 1000 ? 1000 : mScreenSize.Width) :
+						mScreenSize.Height, prefs.getZoomLevel());
 		LL.d(String.format("Map from :%s", url));
 		TaskHelper.getImageLoader().get(url, this);
 	}

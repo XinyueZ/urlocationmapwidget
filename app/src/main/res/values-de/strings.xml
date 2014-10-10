@@ -4,7 +4,6 @@
     <string name="application_name">Deine Position Widget</string>
     <string name="lbl_google">Google Karte</string>
     <string name="lbl_baidu">Baidu Karte(Nur in V.R China verfügbar)</string>
-    <string name="lbl_find_widget">Finde Widget</string>
     <string name="lbl_app_init">Initialisierung…</string>
     <string name="lbl_app_init_done">Initialisiert…</string>
     <string name="lbl_minutes">%s Minute(n)</string>

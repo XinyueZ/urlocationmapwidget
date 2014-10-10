@@ -10,27 +10,20 @@
         android:layout_width="50dp"
         android:layout_height="50dp" />
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="match_parent">
 
 
-        <ImageView
-            android:id="@+id/urlocation_iv"
-            android:src="@drawable/ic_launcher"
-            android:layout_width="match_parent"
-            android:background="@android:color/transparent"
-            android:layout_height="match_parent" />
-
-
         <LinearLayout
             android:id="@+id/widget_controller_ll"
-            android:layout_gravity="right|center_vertical"
-            android:layout_width="wrap_content"
+            android:layout_gravity="top|center_horizontal"
+            android:layout_width="match_parent"
             android:background="@color/setting_bg"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:weightSum="6"
+            android:orientation="horizontal">
 
             <ImageButton
                 android:id="@+id/setting_btn"
@@ -40,13 +33,12 @@
             <ImageButton
                 android:id="@+id/update_btn"
                 android:src="@drawable/ic_only_refresh_btn"
-                style="@style/Widget_ImageButton"
-                />
+                style="@style/Widget_ImageButton" />
 
             <ImageButton
                 android:id="@+id/quick_setting_btn"
                 android:src="@drawable/ic_quick_setting_btn"
-                style="@style/Widget_ImageButton"/>
+                style="@style/Widget_ImageButton" />
 
             <ImageButton
                 android:id="@+id/locate_btn"
@@ -61,11 +53,21 @@
             <ImageButton
                 android:id="@+id/zoom_out_btn"
                 android:src="@drawable/ic_zoom_out_btn"
-                style="@style/Widget_ImageButton"  />
+                style="@style/Widget_ImageButton" />
 
         </LinearLayout>
 
 
-    </FrameLayout>
+        <ImageView
+            android:id="@+id/urlocation_iv"
+            android:src="@drawable/ic_launcher"
+            android:layout_width="match_parent"
+            android:background="@android:color/transparent"
+            android:layout_height="match_parent"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginRight="@dimen/activity_horizontal_margin" />
+
+
+    </LinearLayout>
 
 </FrameLayout>

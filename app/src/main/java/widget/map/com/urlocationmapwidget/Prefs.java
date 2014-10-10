@@ -13,6 +13,14 @@ import com.google.android.gms.maps.model.LatLng;
  */
 public final class Prefs extends BasicPrefs {
 	/**
+	 * Map by Google Inc.
+	 */
+	public static final int GOOGLE_MAP = 0;
+	/**
+	 * Map by Baidu Inc.
+	 */
+	public static final int BAIDU_MAP = 1;
+	/**
 	 * Priority 0: accuracy.
 	 */
 	public static final int PRIORITY_HIGH_ACCURACY = 0;
@@ -114,7 +122,7 @@ public final class Prefs extends BasicPrefs {
 	 * Set current selected map type.
 	 *
 	 * @param currentMap
-	 * 		{@code 0=google map}, {@code 0=baidu map}.
+	 * 		{@link #GOOGLE_MAP} or {@link #BAIDU_MAP}.
 	 */
 	public void setCurrentMap(int currentMap) {
 		setInt(KEY_CURRENT_MAP, currentMap);
@@ -123,10 +131,10 @@ public final class Prefs extends BasicPrefs {
 	/**
 	 * Get current selected map type.
 	 *
-	 * @return {@code 0=google map}, {@code 0=baidu map}, default is {@code 0=google map}.
+	 * @return {@link #GOOGLE_MAP} or {@link #BAIDU_MAP}.
 	 */
 	public int getCurrentMap() {
-		return getInt(KEY_CURRENT_MAP, 0);
+		return getInt(KEY_CURRENT_MAP, GOOGLE_MAP);
 	}
 
 	/**
@@ -170,7 +178,7 @@ public final class Prefs extends BasicPrefs {
 	 * <p/>
 	 * Example:
 	 * <p/>
-	 * {@code http://api.map.baidu.com/staticimage?center=116.403874,39.914888&width=300&height=200&zoom=11}
+	 * {@code http://api.map.baidu.com/staticimage?center=116.403874,39.914888&width=768&height=1000&zoom=19&markers=116.403874,39.914888&markerStyles=m,A}
 	 */
 	public String getUrlBaidu() {
 		return getString(KEY_BAIDU_MAP, null);
@@ -213,12 +221,12 @@ public final class Prefs extends BasicPrefs {
 	 * @return The final url to the static map.
 	 */
 	public String getMap(LatLng latlng, int width, int height, int zoom) {
-		if (getCurrentMap() == 0) {
+		if (getCurrentMap() == GOOGLE_MAP) {
 			return String.format(getUrlGoogle(), latlng.latitude + "", latlng.longitude + "", width + "", height + "",
 					zoom, latlng.latitude + "", latlng.longitude + "");
 		} else {
 			return String.format(getUrlBaidu(), latlng.longitude + "", latlng.latitude + "", width + "", height + "",
-					zoom);
+					zoom, latlng.longitude + "", latlng.latitude + "");
 		}
 	}
 

@@ -4,7 +4,6 @@
     <string name="application_name">当前位置</string>
     <string name="lbl_google">谷歌地图</string>
     <string name="lbl_baidu">百度地图(只在中国大陆有效)</string>
-    <string name="lbl_find_widget">找到小部件</string>
     <string name="lbl_app_init">初始化…</string>
     <string name="lbl_app_init_done">已初始化…</string>
     <string name="lbl_minutes">%s 分钟</string>

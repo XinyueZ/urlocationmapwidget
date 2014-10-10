@@ -7,10 +7,11 @@
 
     <style name="Widget_ImageButton">
         <item name="android:clickable">true</item>
-        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_gravity">right|top</item>
         <item name="android:background">@drawable/selector_bg1_btn</item>
+        <item name="android:layout_weight">1</item>
     </style>
 
 
