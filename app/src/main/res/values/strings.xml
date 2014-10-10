@@ -16,4 +16,10 @@
     </string-array>
     <string name="msg_locate">Locate your position…</string>
     <string name="msg_stop_locate">Stop locating your position…</string>
+
+    <!-- External Apps -->
+    <string name="extapp_title">More Apps:</string>
+    <string name="extapp_download">Inst.</string>
+    <string name="extapp_buy">Buy</string>
+    <string name="extapp_open">Start</string>
 </resources>

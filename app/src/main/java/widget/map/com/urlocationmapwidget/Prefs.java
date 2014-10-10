@@ -92,7 +92,10 @@ public final class Prefs extends BasicPrefs {
 	 * Locating priority.
 	 */
 	private static final String KEY_PRIORITY = "priority";
-
+	/**
+	 * API. Get list of all external applications.
+	 */
+	private static final String KEY_APP_LIST = "app_list";
 	/**
 	 * Created a DeviceData storage.
 	 *
@@ -329,5 +332,12 @@ public final class Prefs extends BasicPrefs {
 	 */
 	public int getPrioritySelection() {
 		return getInt(KEY_PRIORITY, PRIORITY_BALANCED_POWER_ACCURACY);
+	}
+	/**
+	 * Get API for all external applications.
+	 * @return API.
+	 */
+	public String getApiAppList() {
+		return getString(KEY_APP_LIST, null);
 	}
 }
