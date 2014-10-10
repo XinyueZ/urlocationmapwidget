@@ -7,6 +7,13 @@
     <string name="lbl_find_widget">Finde Widget</string>
     <string name="lbl_app_init">Initialisierung…</string>
     <string name="lbl_app_init_done">Initialisiert…</string>
+    <string name="lbl_minutes">%s Minute(n)</string>
+    <string name="lbl_priority">Priorität</string>
+    <string-array name="array_priorities">
+        <item>Genauigkeit (fein, beste, hoch)</item>
+        <item>ausgewogene Energie Genauigkeit</item>
+        <item>grobe, schlechte, niedrige Energie</item>
+    </string-array>
     <string name="msg_locate" >Lokalisiert…</string>
     <string name="msg_stop_locate">Lokalisierung wird angehalten…</string>
 </resources>

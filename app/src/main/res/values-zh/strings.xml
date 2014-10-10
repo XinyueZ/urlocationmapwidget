@@ -7,6 +7,14 @@
     <string name="lbl_find_widget">找到小部件</string>
     <string name="lbl_app_init">初始化…</string>
     <string name="lbl_app_init_done">已初始化…</string>
+    <string name="lbl_minutes">%s 分钟</string>
+    <string name="lbl_interval">刷新频率</string>
+    <string name="lbl_priority">定位优先</string>
+    <string-array name="array_priorities">
+        <item>最好，最精确，也最耗电</item>
+        <item>平衡电量</item>
+        <item>最差，最节省电量</item>
+    </string-array>
     <string name="msg_locate" >定位…</string>
     <string name="msg_stop_locate">中断定位…</string>
 </resources>

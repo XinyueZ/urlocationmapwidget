@@ -40,6 +40,10 @@ public final class UrLocationWidgetProvider extends AppWidgetProvider {
 	 * Click event action for click map.
 	 */
 	private static final String ACTION_CLICK_MAP = "widget.map.com.urlocationmapwidget.CLICK_MAP";
+	/**
+	 * Click event action for quick-setting: update interval, battery saving etc.
+	 */
+	private static final String ACTION_QUICK_SETTING = "widget.map.com.urlocationmapwidget.QUICK_SETTING";
 
 	/**
 	 * Click event action for enable locating.
@@ -68,7 +72,9 @@ public final class UrLocationWidgetProvider extends AppWidgetProvider {
 			views.setOnClickPendingIntent(R.id.zoom_in_btn, buildViewClickIntent(context, ACTION_ZOOM_IN));
 			views.setOnClickPendingIntent(R.id.zoom_out_btn, buildViewClickIntent(context, ACTION_ZOOM_OUT));
 			views.setOnClickPendingIntent(R.id.update_btn, buildViewClickIntent(context, ACTION_UPDATE));
-			views.setOnClickPendingIntent(R.id.urlocation_iv, buildViewClickIntent(context, ACTION_CLICK_MAP) );
+			views.setOnClickPendingIntent(R.id.urlocation_iv, buildViewClickIntent(context, ACTION_CLICK_MAP));
+			views.setOnClickPendingIntent(R.id.quick_setting_btn, buildViewClickIntent(context, ACTION_QUICK_SETTING));
+
 			appWidgetManager.updateAppWidget(thisWidget, views);
 		}
 	}
@@ -77,14 +83,14 @@ public final class UrLocationWidgetProvider extends AppWidgetProvider {
 	public void onReceive(Context context, Intent intent) {
 		super.onReceive(context, intent);
 		Prefs prefs = Prefs.getInstance(context.getApplicationContext());
+		if (!prefs.isInit()) {
+			MainActivity.showInstance(context);
+			return;
+		}
 		if (ACTION_SETTING.equals(intent.getAction())) {
 			MainActivity.showInstance(context);
 		} else if (ACTION_LOCATE.equals(intent.getAction())) {
-			if (!prefs.isLocationUpdating()) {
-				context.startService(new Intent(context, UrLocationWidgetService.class));
-			} else {
-				context.stopService(new Intent(context, UrLocationWidgetService.class));
-			}
+			Utils.toggleLocating(context);
 		} else if (ACTION_ZOOM_IN.equals(intent.getAction())) {
 			int curZoom = prefs.getZoomLevel();
 			prefs.setZoomLevel(++curZoom);
@@ -102,14 +108,13 @@ public final class UrLocationWidgetProvider extends AppWidgetProvider {
 					ACTION_LOCATE));
 			ComponentName thisWidget = new ComponentName(context, UrLocationWidgetProvider.class);
 			AppWidgetManager.getInstance(context).updateAppWidget(thisWidget, views);
-		} else if(ACTION_CLICK_MAP.equals(intent.getAction())) {
-			if(!prefs.isInit()) {
-				MainActivity.showInstance(context);
-			} else {
-				context.startService(new Intent(context, UrLocationWidgetService.class));
-			}
+		} else if (ACTION_CLICK_MAP.equals(intent.getAction())) {
+			Utils.toggleLocating(context);
+		} else if (ACTION_QUICK_SETTING.equals(intent.getAction())) {
+			QuickSettingActivity.showInstance(context);
 		}
 	}
+
 
 	/**
 	 * Make click event handler.

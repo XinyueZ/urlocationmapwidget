@@ -30,7 +30,7 @@ import com.google.android.gms.maps.model.LatLng;
 import de.greenrobot.event.EventBus;
 
 /**
- * Provide location for widget.
+ * Service background(main thread) to provide current location of user for widget.
  *
  * @author Xinyue Zhao
  */
@@ -76,14 +76,14 @@ public final class UrLocationWidgetService extends Service implements Connection
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		EventBus.getDefault().register(this);
+
 		Prefs prefs = Prefs.getInstance(getApplicationContext());
 		mScreenSize = DeviceUtils.getScreenSize(this);
 		mLocationClient = new LocationClient(this, this, this);
 		mLocationRequest = LocationRequest.create();
-		mLocationRequest.setPriority(LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY);
-		int interval = prefs.getInterval();
-		mLocationRequest.setInterval(TimeUnit.MINUTES.toMillis(interval));
-		mLocationRequest.setFastestInterval(TimeUnit.MINUTES.toMillis(1));
+		mLocationRequest.setPriority(prefs.getPriority());
+		mLocationRequest.setInterval(TimeUnit.MINUTES.toMillis(prefs.getInterval()));
+		mLocationRequest.setFastestInterval(TimeUnit.MINUTES.toMillis(3));
 		mLocationClient.connect();
 
 		prefs.setLocationUpdating(true);
@@ -109,6 +109,7 @@ public final class UrLocationWidgetService extends Service implements Connection
 	@Override
 	public void onDestroy() {
 		EventBus.getDefault().unregister(this);
+
 		Utils.showLongToast(this, R.string.msg_stop_locate);
 		Prefs.getInstance(getApplication()).setLocationUpdating(false);
 		setLocateButton(R.drawable.ic_locate_btn);

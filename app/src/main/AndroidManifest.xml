@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="widget.map.com.urlocationmapwidget" >
+    package="widget.map.com.urlocationmapwidget">
 
     <!-- Internet calls etc. -->
     <uses-permission android:name="android.permission.INTERNET" />
@@ -17,16 +17,16 @@
         android:icon="@drawable/ic_launcher"
         android:label="@string/application_name"
         android:theme="@style/AppTheme"
-        tools:replace="android:label" >
+        tools:replace="android:label">
 
         <!-- This meta-data tag is required to use Google Play Services. -->
         <meta-data
-            android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+        android:name="com.google.android.gms.version"
+        android:value="@integer/google_play_services_version" />
 
         <activity
             android:name=".MainActivity"
-            android:label="@string/application_name" >
+            android:label="@string/application_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,10 +34,16 @@
             </intent-filter>
         </activity>
 
+
+        <activity
+            android:name=".QuickSettingActivity"
+            android:label="@string/application_name"
+            android:theme="@android:style/Theme.Holo.Dialog" />
+
         <receiver
             android:name=".UrLocationWidgetProvider"
             android:icon="@drawable/ic_launcher"
-            android:label="@string/application_name" >
+            android:label="@string/application_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="widget.map.com.urlocationmapwidget.SETTING" />
@@ -45,9 +51,9 @@
                 <action android:name="widget.map.com.urlocationmapwidget.ZOOM_IN" />
                 <action android:name="widget.map.com.urlocationmapwidget.ZOOM_OUT" />
                 <action android:name="widget.map.com.urlocationmapwidget.UPDATE" />
-                <action android:name="widget.map.com.urlocationmapwidget.ENABLE_LOCATING"/>
-                <action android:name="widget.map.com.urlocationmapwidget.CLICK_MAP"/>
-
+                <action android:name="widget.map.com.urlocationmapwidget.ENABLE_LOCATING" />
+                <action android:name="widget.map.com.urlocationmapwidget.CLICK_MAP" />
+                <action android:name="widget.map.com.urlocationmapwidget.QUICK_SETTING" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"
@@ -57,8 +63,7 @@
         <service
             android:name=".UrLocationWidgetService"
             android:enabled="true"
-            android:exported="false" >
-        </service>
+            android:exported="false" />
     </application>
 
 </manifest>

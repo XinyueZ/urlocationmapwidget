@@ -3,6 +3,7 @@ package widget.map.com.urlocationmapwidget;
 import android.content.Context;
 
 import com.chopping.application.BasicPrefs;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.model.LatLng;
 
 /**
@@ -12,13 +13,41 @@ import com.google.android.gms.maps.model.LatLng;
  */
 public final class Prefs extends BasicPrefs {
 	/**
+	 * Priority 0: accuracy.
+	 */
+	public static final int PRIORITY_HIGH_ACCURACY = 0;
+	/**
+	 * Priority 1: balanced power.
+	 */
+	public static final int PRIORITY_BALANCED_POWER_ACCURACY = 1;
+	/**
+	 * Priority 2: low accuracy.
+	 */
+	public static final int PRIORITY_LOW_POWER = 2;
+	/**
+	 * Max zoom-level.
+	 */
+	private static final int MAX_ZOOM_LEVEL = 19;
+	/**
+	 * Min zoom-level.
+	 */
+	private static final int MIN_ZOOM_LEVEL = 10;
+	/**
+	 * Max update interval.
+	 */
+	public static final int MAX_INTERVAL = 30;
+	/**
+	 * Min update interval.
+	 */
+	public static final int MIN_INTERVAL = 3;
+	/**
 	 * Default zoom.
 	 */
-	private static final int DEFAULT_ZOOM_LEVEL = 19;
+	private static final int DEFAULT_ZOOM_LEVEL = MAX_ZOOM_LEVEL;
 	/**
 	 * Default interval.
 	 */
-	private static final int DEFAULT_INTERVAL = 3;
+	private static final int DEFAULT_INTERVAL = MIN_INTERVAL;
 	/**
 	 * Impl singleton pattern.
 	 */
@@ -51,6 +80,10 @@ public final class Prefs extends BasicPrefs {
 	 * Flag, whether app has been inited or not.
 	 */
 	private static final String KEY_INIT = "app_init";
+	/**
+	 * Locating priority.
+	 */
+	private static final String KEY_PRIORITY = "priority";
 
 	/**
 	 * Created a DeviceData storage.
@@ -193,13 +226,15 @@ public final class Prefs extends BasicPrefs {
 	 * Set current map zoom-level.
 	 *
 	 * @param zoomLevel
-	 * 		The zoom-level is (10-19)
+	 * 		The zoom-level is ({@link #MIN_ZOOM_LEVEL}-{@link #MAX_ZOOM_LEVEL}).
+	 * 		<p/>
+	 * 		When larger or less than the limit value, the limit value should be accepted.
 	 */
 	public void setZoomLevel(int zoomLevel) {
-		if (zoomLevel > 19) {
-			zoomLevel = 19;
-		} else if (zoomLevel < 10) {
-			zoomLevel = 10;
+		if (zoomLevel > MAX_ZOOM_LEVEL) {
+			zoomLevel = MAX_ZOOM_LEVEL;
+		} else if (zoomLevel < MIN_ZOOM_LEVEL) {
+			zoomLevel = MIN_ZOOM_LEVEL;
 		}
 		setInt(KEY_ZOOM_LEVEL, zoomLevel);
 	}
@@ -208,7 +243,7 @@ public final class Prefs extends BasicPrefs {
 	 * Set map update interval in minute.
 	 *
 	 * @param interval
-	 * 		The interval is (3-30)minutes.
+	 * 		The interval is ({@link #MIN_INTERVAL}-{@link #MAX_INTERVAL})minutes.
 	 */
 	public void setInterval(int interval) {
 		setInt(KEY_INTERVAL, interval);
@@ -217,7 +252,8 @@ public final class Prefs extends BasicPrefs {
 	/**
 	 * Get map current zoom-level
 	 *
-	 * @return The zoom-level is (6-19). Default is {@link #DEFAULT_ZOOM_LEVEL}.
+	 * @return The zoom-level is ({@link #MIN_ZOOM_LEVEL}-{@link #MAX_ZOOM_LEVEL}). Default is {@link
+	 * #DEFAULT_ZOOM_LEVEL}.
 	 */
 	public int getZoomLevel() {
 		return getInt(KEY_ZOOM_LEVEL, DEFAULT_ZOOM_LEVEL);
@@ -226,17 +262,64 @@ public final class Prefs extends BasicPrefs {
 	/**
 	 * Get map update interval.
 	 *
-	 * @return The interval (3-30)minutes. Default is {@link #DEFAULT_INTERVAL}.
+	 * @return The interval ({@link #MIN_INTERVAL}-{@link #MAX_INTERVAL})minutes. Default is {@link #DEFAULT_INTERVAL}.
 	 */
 	public int getInterval() {
 		return getInt(KEY_INTERVAL, DEFAULT_INTERVAL);
 	}
 
+	/**
+	 * Set whether system has been initialized or not, configuration to load etc.
+	 *
+	 * @param init
+	 * 		{@code true} if initialized.
+	 */
 	public void setInit(boolean init) {
 		setBoolean(KEY_INIT, init);
 	}
 
+	/**
+	 * Get whether system has been initialized or not, configuration to load etc.
+	 *
+	 * @return {@code true} if initialized.
+	 */
 	public boolean isInit() {
 		return getBoolean(KEY_INIT, false);
+	}
+
+	/**
+	 * Set selection of locating priority.
+	 *
+	 * @param priority
+	 * 		{@link #PRIORITY_HIGH_ACCURACY}, {@link #PRIORITY_BALANCED_POWER_ACCURACY}, {@link #PRIORITY_LOW_POWER}.
+	 */
+	public void setPrioritySelection(int priority) {
+		setInt(KEY_PRIORITY, priority);
+	}
+
+	/**
+	 * Get locating priority.
+	 *
+	 * @return priority  {@link com.google.android.gms.location.LocationRequest#PRIORITY_HIGH_ACCURACY}, {@link com.google.android.gms.location.LocationRequest#PRIORITY_BALANCED_POWER_ACCURACY}, {@link
+	 * com.google.android.gms.location.LocationRequest#PRIORITY_LOW_POWER}.
+	 */
+	public int getPriority() {
+		switch (getInt(KEY_PRIORITY, PRIORITY_BALANCED_POWER_ACCURACY)) {
+		case  PRIORITY_HIGH_ACCURACY:
+			return LocationRequest.PRIORITY_HIGH_ACCURACY;
+		case PRIORITY_LOW_POWER:
+			return LocationRequest.PRIORITY_LOW_POWER;
+		default:
+			return LocationRequest.PRIORITY_BALANCED_POWER_ACCURACY;
+		}
+	}
+
+	/**
+	 * Get selection of locating priority.
+	 *
+	 * @return selection of priority.
+	 */
+	public int getPrioritySelection() {
+		return getInt(KEY_PRIORITY, PRIORITY_BALANCED_POWER_ACCURACY);
 	}
 }

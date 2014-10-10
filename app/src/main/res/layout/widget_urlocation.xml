@@ -25,6 +25,7 @@
 
 
         <LinearLayout
+            android:id="@+id/widget_controller_ll"
             android:layout_gravity="right|center_vertical"
             android:layout_width="wrap_content"
             android:background="@color/setting_bg"
@@ -43,8 +44,8 @@
                 />
 
             <ImageButton
-                android:id="@+id/update_freq_btn"
-                android:src="@drawable/ic_update_freq_btn"
+                android:id="@+id/quick_setting_btn"
+                android:src="@drawable/ic_quick_setting_btn"
                 style="@style/Widget_ImageButton"/>
 
             <ImageButton

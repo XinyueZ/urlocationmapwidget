@@ -30,15 +30,16 @@ public final class MainActivity extends BaseActivity {
 	 * Show some message.
 	 */
 	private TextView msgTv;
+
 	/**
-	 * Show single instance of {@link}
+	 * Show single instance of {@link MainActivity}
 	 *
 	 * @param cxt
 	 * 		{@link android.content.Context}.
 	 */
 	public static void showInstance(Context cxt) {
 		Intent intent = new Intent(cxt, MainActivity.class);
-		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		cxt.startActivity(intent);
 	}
 
