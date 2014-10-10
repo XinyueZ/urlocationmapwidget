@@ -2,6 +2,8 @@ Widget for "Ur" location
 ======
 A simple widget to show your current location. Support API from Google Inc. and Baidu.Inc.
 
+[![https://play.google.com/store/apps/details?id=widget.map.com.urlocationmapwidget](https://dl.dropbox.com/s/phrg0387osr3riz/images.jpeg)](https://play.google.com/store/apps/details?id=widget.map.com.urlocationmapwidget)
+
 License
 ======
 The MIT License (MIT)
