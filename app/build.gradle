@@ -7,6 +7,7 @@ buildscript {
         classpath 'com.crashlytics.tools.gradle:crashlytics-gradle:1.+'
     }
 }
+def buildNumber = 'bld' + (System.env.BUILD_NUMBER ?: 'SNAPSHOT')
 apply plugin: 'com.android.application'
 apply plugin: 'crashlytics'
 
@@ -27,10 +28,19 @@ android {
         versionName "1.0"
     }
     buildTypes {
+        debug {
+            zipAlign true
+//            versionNameSuffix buildNumber
+        }
         release {
             runProguard false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
+    }
+
+    lintOptions {
+        htmlReport false
+        abortOnError false
     }
 }
 
@@ -41,4 +51,14 @@ dependencies {
     compile project(':volley_cz')
     compile project(':ChoppingBootstrap')
     compile 'com.crashlytics.android:crashlytics:1.+'
+}
+
+
+// Rename final apks
+android.applicationVariants.all { variant ->
+    def apk = variant.outputFile
+    def newName = apk.name
+            .replace("_Android", "")
+            .replace(".apk", "-${android.defaultConfig.versionName}${buildNumber}.apk")
+    variant.outputFile = new File(apk.parent, newName)
 }
