@@ -55,7 +55,7 @@ public final class Prefs extends BasicPrefs {
 	/**
 	 * Default interval.
 	 */
-	private static final int DEFAULT_INTERVAL = MIN_INTERVAL;
+	private static final int DEFAULT_INTERVAL = MAX_INTERVAL / 2;
 	/**
 	 * Impl singleton pattern.
 	 */

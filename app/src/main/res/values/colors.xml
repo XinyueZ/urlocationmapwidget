@@ -4,7 +4,10 @@
     <color name="pressed_bg">#00007d</color>
     <color name="progress">#FF3333</color>
     <color name="text_common_black">@android:color/black</color>
-
+    <color name="last_update_bg">#FF0000</color>
+    <color name="location_name_bg">#00FF00</color>
+    <color name="last_update_text">@android:color/white</color>
+    <color name="location_name_text">#0f6ea5</color>
 
     <!--External app-list-->
     <color name="installed_highlighted">#0c5984</color>

@@ -38,7 +38,9 @@
         <activity
             android:name=".QuickSettingActivity"
             android:label="@string/application_name"
-            android:theme="@android:style/Theme.Holo.Dialog" />
+            android:theme="@android:style/Theme.Holo.Dialog"
+            android:taskAffinity="widget.map.com.urlocationmapwidget.QUICK_SETTING"
+            android:excludeFromRecents="true"/>
 
         <receiver
             android:name=".UrLocationWidgetProvider"

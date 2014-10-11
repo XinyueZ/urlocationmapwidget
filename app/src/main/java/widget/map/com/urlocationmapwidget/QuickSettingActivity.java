@@ -30,10 +30,6 @@ public final class QuickSettingActivity extends Activity implements OnSeekBarCha
 	 * Show current selected minutes.
 	 */
 	private TextView mMinutesTv;
-	/**
-	 * Select priority on a list.
-	 */
-	private Spinner mPrioritySp;
 
 	/**
 	 * Show single instance of {@link QuickSettingActivity}
@@ -59,15 +55,18 @@ public final class QuickSettingActivity extends Activity implements OnSeekBarCha
 		showSelectedInterval(curInterval);
 		mIntervalSb.setOnSeekBarChangeListener(this);
 
-		mPrioritySp = (Spinner) findViewById(R.id.set_priority_sp);
-		mPrioritySp.setSelection(prefs.getPrioritySelection());
-		mPrioritySp.setOnItemSelectedListener(this);
+		/*
+	  Select priority on a list.
+	 */
+		Spinner prioritySp = (Spinner) findViewById(R.id.set_priority_sp);
+		prioritySp.setSelection(prefs.getPrioritySelection());
+		prioritySp.setOnItemSelectedListener(this);
 	}
 
 	@Override
-	public void onBackPressed() {
+	protected void onStop() {
 		Utils.restart(getApplication());
-		super.onBackPressed();
+		super.onStop();
 	}
 
 	/**

@@ -9,7 +9,9 @@
     <string name="lbl_minutes">%s Minute(n)</string>
     <string name="lbl_priority">Priorität</string>
     <string name="lbl_introduce_app">Eine gute App stelle ich hier vor!</string>
-    <string name="lbl_share_app_content">Widget, deine Location auf dem Home-Screen zu zeigen. \n\nDownload: market://details?id=widget.map.com.urlocationmapwidget</string>
+    <string name="lbl_share_app_content">Widget, deine Location auf dem Home-Screen zu zeigen. \n\nDownload: http://tinyurl.com/pp6pk5g</string>
+    <string name="lbl_last_update">Letzte aktualisiert</string>
+    <string name="lbl_location_name">Wo bin ich?</string>
     <string-array name="array_priorities">
         <item>Genauigkeit (fein, beste, hoch)</item>
         <item>ausgewogene Energie Genauigkeit</item>
