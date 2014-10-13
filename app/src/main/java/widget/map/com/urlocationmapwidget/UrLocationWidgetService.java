@@ -168,18 +168,20 @@ public final class UrLocationWidgetService extends Service implements Connection
 
 	@Override
 	public void onLocationChanged(Location location) {
-		Prefs prefs = Prefs.getInstance(getApplication());
+		if(location!= null) {
+			Prefs prefs = Prefs.getInstance(getApplication());
 
-		//Baidu can not accept size more than 1024! We needs width == height.
-		String url = prefs.getMap(new LatLng(location.getLatitude(), location.getLongitude()),
-				prefs.getCurrentMap() == Prefs.BAIDU_MAP ? (mScreenSize.Width > 1000 ? 1000 : mScreenSize.Width) :
-						mScreenSize.Width,
-				prefs.getCurrentMap() == Prefs.BAIDU_MAP ? (mScreenSize.Width > 1000 ? 1000 : mScreenSize.Width) :
-						mScreenSize.Height, prefs.getZoomLevel());
-		LL.d(String.format("Map from :%s", url));
-		TaskHelper.getImageLoader().get(url, this);
-
-		new GetAddressTask(this).executeParallel(location);
+			//Baidu can not accept size more than 1024! We needs width == height.
+			String url = prefs.getMap(new LatLng(location.getLatitude(), location.getLongitude()),
+					prefs.getCurrentMap() == Prefs.BAIDU_MAP ? (mScreenSize.Width > 1000 ? 1000 : mScreenSize.Width) :
+							mScreenSize.Width,
+					prefs.getCurrentMap() == Prefs.BAIDU_MAP ? (mScreenSize.Width > 1000 ? 1000 : mScreenSize.Width) :
+							mScreenSize.Height, prefs.getZoomLevel());
+			//		LL.d(String.format("Map from :%s", url));
+			TaskHelper.getImageLoader().get(url, this);
+			prefs.setLastLocation(location);
+			new GetAddressTask(this).executeParallel(location);
+		}
 	}
 
 	/**
@@ -220,7 +222,7 @@ public final class UrLocationWidgetService extends Service implements Connection
 	 * String   - An address passed to onPostExecute()
 	 */
 	private static class GetAddressTask extends ParallelTask<Location, Void, String> {
-		Context mContext;
+		private Context mContext;
 		public GetAddressTask(Context context) {
 			super();
 			mContext = context;
@@ -291,11 +293,15 @@ public final class UrLocationWidgetService extends Service implements Connection
 		@Override
 		protected void onPostExecute(String result) {
 			super.onPostExecute(result);
+			Prefs prefs = Prefs.getInstance(mContext.getApplicationContext());
 			if(!TextUtils.isEmpty(result)) {
 				RemoteViews views = new RemoteViews(mContext.getPackageName(), R.layout.widget_urlocation);
 				views.setTextViewText(R.id.location_name_tv, result);
 				ComponentName thisWidget = new ComponentName(mContext, UrLocationWidgetProvider.class);
 				AppWidgetManager.getInstance(mContext).updateAppWidget(thisWidget, views);
+				prefs.setLastLocationName(result);
+			} else {
+				prefs.setLastLocationName("");
 			}
 		}
 	}

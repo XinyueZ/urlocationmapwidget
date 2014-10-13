@@ -44,6 +44,10 @@ public final class UrLocationWidgetProvider extends AppWidgetProvider {
 	 * Click event action for quick-setting: update interval, battery saving etc.
 	 */
 	private static final String ACTION_QUICK_SETTING = "widget.map.com.urlocationmapwidget.QUICK_SETTING";
+	/**
+	 * Click event action for sharing your location.
+	 */
+	private static final String ACTION_SHARE_LOCATION = "widget.map.com.urlocationmapwidget.SHARE_LOCATION";
 
 	/**
 	 * Click event action for enable locating.
@@ -74,7 +78,7 @@ public final class UrLocationWidgetProvider extends AppWidgetProvider {
 			views.setOnClickPendingIntent(R.id.update_btn, buildViewClickIntent(context, ACTION_UPDATE));
 			views.setOnClickPendingIntent(R.id.urlocation_iv, buildViewClickIntent(context, ACTION_CLICK_MAP));
 			views.setOnClickPendingIntent(R.id.quick_setting_btn, buildViewClickIntent(context, ACTION_QUICK_SETTING));
-
+			views.setOnClickPendingIntent(R.id.share_your_location_btn, buildViewClickIntent(context, ACTION_SHARE_LOCATION));
 			appWidgetManager.updateAppWidget(thisWidget, views);
 		}
 	}
@@ -112,6 +116,9 @@ public final class UrLocationWidgetProvider extends AppWidgetProvider {
 			Utils.toggleLocating(context);
 		} else if (ACTION_QUICK_SETTING.equals(intent.getAction())) {
 			QuickSettingActivity.showInstance(context);
+		} else if(ACTION_SHARE_LOCATION.equals(intent.getAction())) {
+			String myLastLocation = context.getString(R.string.lbl_share_your_location, prefs.getLastLocation(), prefs.getLastLocationName());
+			Utils.getDefaultShareIntent(context, "", myLastLocation );
 		}
 	}
 

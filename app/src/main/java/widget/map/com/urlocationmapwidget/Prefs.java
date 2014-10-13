@@ -1,6 +1,7 @@
 package widget.map.com.urlocationmapwidget;
 
 import android.content.Context;
+import android.location.Location;
 
 import com.chopping.application.BasicPrefs;
 import com.google.android.gms.location.LocationRequest;
@@ -55,7 +56,7 @@ public final class Prefs extends BasicPrefs {
 	/**
 	 * Default interval.
 	 */
-	private static final int DEFAULT_INTERVAL = MAX_INTERVAL / 2;
+	private static final int DEFAULT_INTERVAL = 20;
 	/**
 	 * Impl singleton pattern.
 	 */
@@ -102,6 +103,15 @@ public final class Prefs extends BasicPrefs {
 	 * {@code true} if EULA has been shown and agreed.
 	 */
 	private static final String KEY_EULA_SHOWN = "key_eula_shown";
+	/**
+	 * Last location data that has been caught.
+	 */
+	private static final String KEY_LAST_LATLNG = "key_last_latlng";
+	/**
+	 * Last location name that has been caught.
+	 */
+	private static final String KEY_LAST_LOCATION_NAME = "key_last_location_name";
+
 	/**
 	 * Created a DeviceData storage.
 	 *
@@ -317,12 +327,13 @@ public final class Prefs extends BasicPrefs {
 	/**
 	 * Get locating priority.
 	 *
-	 * @return priority  {@link com.google.android.gms.location.LocationRequest#PRIORITY_HIGH_ACCURACY}, {@link com.google.android.gms.location.LocationRequest#PRIORITY_BALANCED_POWER_ACCURACY}, {@link
+	 * @return priority  {@link com.google.android.gms.location.LocationRequest#PRIORITY_HIGH_ACCURACY}, {@link
+	 * com.google.android.gms.location.LocationRequest#PRIORITY_BALANCED_POWER_ACCURACY}, {@link
 	 * com.google.android.gms.location.LocationRequest#PRIORITY_LOW_POWER}.
 	 */
 	public int getPriority() {
 		switch (getInt(KEY_PRIORITY, PRIORITY_BALANCED_POWER_ACCURACY)) {
-		case  PRIORITY_HIGH_ACCURACY:
+		case PRIORITY_HIGH_ACCURACY:
 			return LocationRequest.PRIORITY_HIGH_ACCURACY;
 		case PRIORITY_LOW_POWER:
 			return LocationRequest.PRIORITY_LOW_POWER;
@@ -339,8 +350,10 @@ public final class Prefs extends BasicPrefs {
 	public int getPrioritySelection() {
 		return getInt(KEY_PRIORITY, PRIORITY_BALANCED_POWER_ACCURACY);
 	}
+
 	/**
 	 * Get API for all external applications.
+	 *
 	 * @return API.
 	 */
 	public String getApiAppList() {
@@ -366,5 +379,43 @@ public final class Prefs extends BasicPrefs {
 	 */
 	public void setEULAOnceConfirmed(boolean isConfirmed) {
 		setBoolean(KEY_EULA_SHOWN, isConfirmed);
+	}
+
+	/**
+	 * Set last location data that has been caught.
+	 *
+	 * @param l
+	 * 		Last {@link android.location.Location}.
+	 */
+	public   void setLastLocation(Location l) {
+		setString(KEY_LAST_LATLNG, String.format("%s,%s", l.getLatitude() + "", l.getLongitude() + ""));
+	}
+
+	/**
+	 * Get last location data that has been caught.
+	 *
+	 * @return Last location in format: Latitude,Longitude.
+	 */
+	public   String getLastLocation() {
+		return getString(KEY_LAST_LATLNG, null);
+	}
+
+	/**
+	 * Set last location name that has been caught.
+	 *
+	 * @param name
+	 * 		Location name, it might be null to replace the last one.
+	 */
+	public   void setLastLocationName(String name) {
+		setString(KEY_LAST_LOCATION_NAME, name);
+	}
+
+	/**
+	 * Get last location name that has been caught.
+	 *
+	 * @return Location name, it might be null to replace the last one.
+	 */
+	public   String getLastLocationName() {
+		return getString(KEY_LAST_LOCATION_NAME, null);
 	}
 }

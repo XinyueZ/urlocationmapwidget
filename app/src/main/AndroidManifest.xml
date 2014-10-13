@@ -56,6 +56,7 @@
                 <action android:name="widget.map.com.urlocationmapwidget.ENABLE_LOCATING" />
                 <action android:name="widget.map.com.urlocationmapwidget.CLICK_MAP" />
                 <action android:name="widget.map.com.urlocationmapwidget.QUICK_SETTING" />
+                <action android:name="widget.map.com.urlocationmapwidget.SHARE_LOCATION" />
             </intent-filter>
             <meta-data
                 android:name="android.appwidget.provider"

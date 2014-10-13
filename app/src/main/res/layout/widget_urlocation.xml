@@ -71,6 +71,14 @@
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginRight="@dimen/activity_horizontal_margin" />
 
+            <ImageButton
+                android:id="@+id/share_your_location_btn"
+                android:layout_gravity="bottom|right"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/selector_bg1_btn"
+                android:src="@drawable/ic_share_your_location" />
+
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -85,7 +93,7 @@
                     style="@style/Widget_Label_TextView"
                     android:textColor="@color/last_update_text"
                     android:background="@color/last_update_bg"
-                    android:text="@string/lbl_last_update"/>
+                    android:text="@string/lbl_last_update" />
 
                 <TextView
                     android:id="@+id/location_name_tv"

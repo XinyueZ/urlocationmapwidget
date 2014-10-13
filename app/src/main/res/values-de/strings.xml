@@ -12,6 +12,7 @@
     <string name="lbl_share_app_content">Widget, deine Location auf dem Home-Screen zu zeigen. \n\nDownload: http://tinyurl.com/pp6pk5g</string>
     <string name="lbl_last_update">Letzte aktualisiert</string>
     <string name="lbl_location_name">Wo bin ich?</string>
+    <string name="lbl_share_your_location">\n\n---------\nVon mein Android Handy.\nIch bin jetzt hier u.g: [%1$s] %2$s.</string>
     <string-array name="array_priorities">
         <item>Genauigkeit (fein, beste, hoch)</item>
         <item>ausgewogene Energie Genauigkeit</item>

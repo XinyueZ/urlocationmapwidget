@@ -57,6 +57,24 @@ public final class Utils {
 		}
 		return null;
 	}
+
+	/**
+	 * Standard sharing app for sharing on actionbar.
+	 */
+	public static Intent getDefaultShareIntent(Context cxt, String subject,
+			String body) {
+		if (cxt != null) {
+			Intent i = new Intent(Intent.ACTION_SEND);
+			i.setType("text/plain");
+			i.putExtra(android.content.Intent.EXTRA_SUBJECT, subject);
+			i.putExtra(android.content.Intent.EXTRA_TEXT, body);
+			i.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP|Intent.FLAG_ACTIVITY_NEW_TASK);
+			cxt.startActivity(i);
+			return i;
+		}
+		return null;
+	}
+
 	/**
 	 * Convert a timestamps to a readable date in string.
 	 *
