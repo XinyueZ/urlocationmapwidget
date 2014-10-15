@@ -22,6 +22,8 @@ import android.widget.TextView;
 
 import com.chopping.activities.BaseActivity;
 import com.chopping.application.BasicPrefs;
+import com.chopping.bus.CloseDrawerEvent;
+import com.chopping.bus.LinkToExternalAppEvent;
 import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -223,7 +225,7 @@ public final class MainActivity extends BaseActivity {
 	 * Show all external applications links.
 	 */
 	private void showAppList() {
-		getSupportFragmentManager().beginTransaction().replace(R.id.app_list_fl, AppListFragment.newInstance(this))
+		getSupportFragmentManager().beginTransaction().replace(R.id.app_list_fl, AppListImplFragment.newInstance(this))
 				.commit();
 	}
 
@@ -245,6 +247,10 @@ public final class MainActivity extends BaseActivity {
 
 	@Override
 	public boolean onOptionsItemSelected(final MenuItem item) {
+		if (mDrawerToggle != null && mDrawerToggle.onOptionsItemSelected(item)) {
+			return true;
+		}
+
 		switch (item.getItemId()) {
 		case R.id.action_about:
 			showDialogFragment(AboutDialogFragment.newInstance(this), null);

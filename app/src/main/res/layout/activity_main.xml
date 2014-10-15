@@ -7,7 +7,8 @@
 
     <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@android:color/white">
 
         <LinearLayout
             android:id="@id/error_content"
@@ -25,7 +26,8 @@
                 android:text="@string/lbl_app_init"
                 android:textAppearance="?android:attr/textAppearanceLarge"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
+                android:layout_height="wrap_content"
+                style="@style/TextView" />
 
             <ProgressBar
                 android:id="@+id/msg_pb"
@@ -48,6 +50,7 @@
                     android:layout_height="wrap_content"
                     android:text="@string/lbl_google"
                     android:layout_margin="5dp"
+                    style="@style/TextView"
                     android:onClick="selectGoogle" />
 
                 <RadioButton
@@ -55,6 +58,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_margin="5dp"
+                    style="@style/TextView"
                     android:text="@string/lbl_baidu"
                     android:onClick="selectBaidu" />
 

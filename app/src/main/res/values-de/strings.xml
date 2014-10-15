@@ -21,11 +21,7 @@
     <string name="msg_locate">Lokalisiert…</string>
     <string name="msg_stop_locate">Lokalisierung wird angehalten…</string>
 
-    <!-- External Apps -->
-    <string name="extapp_title">Weitere Apps:</string>
-    <string name="extapp_download">gratis</string>
-    <string name="extapp_buy">Kuafen</string>
-    <string name="extapp_open">öffnen</string>
+
 
     <string name="menu_share_app">Teile diese App</string>
     <string name="menu_about">Über mich</string>

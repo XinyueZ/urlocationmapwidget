@@ -94,10 +94,6 @@ public final class Prefs extends BasicPrefs {
 	 */
 	private static final String KEY_PRIORITY = "priority";
 	/**
-	 * API. Get list of all external applications.
-	 */
-	private static final String KEY_APP_LIST = "app_list";
-	/**
 	 * Storage. Whether the "End User License Agreement" has been shown and agreed at application's first start.
 	 * <p/>
 	 * {@code true} if EULA has been shown and agreed.
@@ -351,14 +347,6 @@ public final class Prefs extends BasicPrefs {
 		return getInt(KEY_PRIORITY, PRIORITY_BALANCED_POWER_ACCURACY);
 	}
 
-	/**
-	 * Get API for all external applications.
-	 *
-	 * @return API.
-	 */
-	public String getApiAppList() {
-		return getString(KEY_APP_LIST, null);
-	}
 
 	/**
 	 * Whether the "End User License Agreement" has been shown and agreed at application's first start.
