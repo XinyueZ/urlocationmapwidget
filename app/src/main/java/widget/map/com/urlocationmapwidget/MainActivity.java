@@ -6,13 +6,14 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.view.MenuItemCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.widget.ShareActionProvider;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -206,7 +207,7 @@ public final class MainActivity extends BaseActivity {
 			actionBar.setHomeButtonEnabled(true);
 			actionBar.setDisplayHomeAsUpEnabled(true);
 			mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-			mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.drawable.ic_drawer, R.string.app_name,
+			mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,  R.string.app_name,
 					R.string.app_name) {
 				@Override
 				public void onDrawerSlide(View drawerView, float slideOffset) {
@@ -235,8 +236,8 @@ public final class MainActivity extends BaseActivity {
 		getMenuInflater().inflate(MENU, menu);
 		MenuItem menuShare = menu.findItem(R.id.action_share_app);
 
-		android.support.v7.widget.ShareActionProvider provider =
-				(android.support.v7.widget.ShareActionProvider) MenuItemCompat.getActionProvider(menuShare);
+		ShareActionProvider provider =
+				(ShareActionProvider) MenuItemCompat.getActionProvider(menuShare);
 
 		String subject = getString(R.string.lbl_introduce_app);
 		String text = getString(R.string.lbl_share_app_content);
