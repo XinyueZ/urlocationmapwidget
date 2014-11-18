@@ -56,8 +56,8 @@ public final class QuickSettingActivity extends Activity implements OnSeekBarCha
 		mIntervalSb.setOnSeekBarChangeListener(this);
 
 		/*
-	  Select priority on a list.
-	 */
+	 	 *Select priority on a list.
+	 	 */
 		Spinner prioritySp = (Spinner) findViewById(R.id.set_priority_sp);
 		prioritySp.setSelection(prefs.getPrioritySelection());
 		prioritySp.setOnItemSelectedListener(this);

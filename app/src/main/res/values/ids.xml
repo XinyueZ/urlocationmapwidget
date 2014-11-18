@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="setting_btn" type="id"/>
+    <item name="update_btn" type="id"/>
+    <item name="quick_setting_btn" type="id"/>
+    <item name="locate_btn" type="id"/>
+    <item name="zoom_in_btn" type="id"/>
+    <item name="zoom_out_btn" type="id"/>
+    <item name="urlocation_iv" type="id"/>
+    <item name="share_your_location_btn" type="id"/>
+    <item name="location_name_tv" type="id"/>
+    <item name="last_update_tv" type="id"/>
+</resources>

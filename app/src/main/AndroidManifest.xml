@@ -42,8 +42,8 @@
             android:excludeFromRecents="true" />
 
         <receiver
+            android:icon="@drawable/large_preview"
             android:name=".UrLocationWidgetProvider"
-            android:icon="@drawable/ic_launcher"
             android:label="@string/application_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -61,6 +61,28 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget" />
         </receiver>
+
+
+        <receiver
+            android:icon="@drawable/small_preview"
+            android:name=".UrLocationSmallWidgetProvider"
+            android:label="@string/application_name">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+                <action android:name="widget.map.com.urlocationmapwidget.SETTING" />
+                <action android:name="widget.map.com.urlocationmapwidget.LOCATE" />
+                <action android:name="widget.map.com.urlocationmapwidget.UPDATE" />
+                <action android:name="widget.map.com.urlocationmapwidget.ENABLE_LOCATING" />
+                <action android:name="widget.map.com.urlocationmapwidget.CLICK_MAP" />
+                <action android:name="widget.map.com.urlocationmapwidget.QUICK_SETTING" />
+                <action android:name="widget.map.com.urlocationmapwidget.SHARE_LOCATION" />
+            </intent-filter>
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/widget_small" />
+        </receiver>
+
+
         <receiver
             android:name=".BootReceiver"
             android:enabled="true">
@@ -74,15 +96,10 @@
             android:enabled="true"
             android:exported="false" />
 
-        <!--Event handler for reject incoming calls.-->
-        <receiver
-            android:name="com.chopping.utils.IncomingCallReceiver"
-            android:exported="false"
-            android:enabled="false">
-            <intent-filter android:priority="100">
-                <action android:name="android.intent.action.PHONE_STATE" />
-            </intent-filter>
-        </receiver>
+        <service
+            android:name=".UrLocationSmallWidgetService"
+            android:enabled="true"
+            android:exported="false" />
 
         <!--Event handler for changing system packages.-->
         <receiver

@@ -16,7 +16,7 @@ import static android.text.format.DateUtils.formatDateTime;
  */
 public final class Utils {
 	/**
-	 * Start or stop the {@link widget.map.com.urlocationmapwidget.UrLocationWidgetService} to require current location
+	 * Start or stop the {@link widget.map.com.urlocationmapwidget.UrLocationWidgetService}  and {@link widget.map.com.urlocationmapwidget.UrLocationSmallWidgetService}to require current location
 	 * with different priorities.
 	 *
 	 * @param context
@@ -26,13 +26,15 @@ public final class Utils {
 		Prefs prefs = Prefs.getInstance(context.getApplicationContext());
 		if (!prefs.isLocationUpdating()) {
 			context.startService(new Intent(context, UrLocationWidgetService.class));
+			context.startService(new Intent(context, UrLocationSmallWidgetService.class));
 		} else {
 			context.stopService(new Intent(context, UrLocationWidgetService.class));
+			context.stopService(new Intent(context, UrLocationSmallWidgetService.class));
 		}
 	}
 
 	/**
-	 * Restart the {@link UrLocationWidgetService}.
+	 * Restart the {@link UrLocationWidgetService}, {@link UrLocationSmallWidgetService}.
 	 *
 	 * @param context
 	 * 		{@link android.content.Context}.
@@ -40,6 +42,9 @@ public final class Utils {
 	public static void restart(Context context) {
 		context.stopService(new Intent(context, UrLocationWidgetService.class));
 		context.startService(new Intent(context, UrLocationWidgetService.class));
+
+		context.stopService(new Intent(context, UrLocationSmallWidgetService.class));
+		context.startService(new Intent(context, UrLocationSmallWidgetService.class));
 	}
 
 	/**

@@ -64,6 +64,7 @@ public final class App extends Application {
 		Prefs prefs = Prefs.getInstance(this);
 		if (prefs.isLocationUpdating()) {
 			startService(new Intent(this, UrLocationWidgetService.class));
+			startService(new Intent(this, UrLocationSmallWidgetService.class));
 		}
 	}
 

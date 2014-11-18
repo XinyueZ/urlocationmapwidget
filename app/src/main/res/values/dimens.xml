@@ -3,4 +3,5 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="padding_eula">16dp</dimen>
+    <dimen name="padding_small_widget_textview">5dp</dimen>
 </resources>
