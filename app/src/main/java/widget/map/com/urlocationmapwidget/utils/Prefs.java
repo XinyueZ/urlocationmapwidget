@@ -117,6 +117,14 @@ public final class Prefs extends BasicPrefs {
 	 * Url for geocode of Baidu Inc.
 	 */
 	private static final String KEY_BAIDU_GEOCODE = "baidu_geocode";
+	/**
+	 * Url for place-api of Google Inc.
+	 */
+	private static final String KEY_GOOGLE_PLACE="google_place";
+	/**
+	 * Url for place-api of Baidu Inc.
+	 */
+	private static final String KEY_BAIDU_PLACE = "baidu_place";
 
 	/**
 	 * Created a DeviceData storage.
@@ -444,6 +452,36 @@ public final class Prefs extends BasicPrefs {
 			return String.format(getUrlGoogleGeocode(), latlng.latitude + "", latlng.longitude + "", lang);
 		} else {
 			return String.format(getUrlBaiduGeocode(), latlng.latitude + "", latlng.longitude + "", lang);
+		}
+	}
+
+
+	/**
+	 * Get API of Google Inc. place.
+	 * @return Url of API.
+	 */
+	private String getUrlGooglePlace() {
+		return getString(KEY_GOOGLE_PLACE, null);
+	}
+
+	/**
+	 * Get API of Baidu Inc. place.
+	 * @return Url of API.
+	 */
+	private String getUrlBaiduPlace() {
+		return getString(KEY_BAIDU_PLACE, null);
+	}
+
+	/**
+	 * Get API of place of different providers.
+	 * @param latlng  Latitude and Longitude.
+	 * @return Url of API.
+	 */
+	public String getUrlPlace(LatLng latlng) {
+		if (getCurrentMap() == GOOGLE_MAP) {
+			return String.format(getUrlGooglePlace(), latlng.latitude + "", latlng.longitude + ""  );
+		} else {
+			return String.format(getUrlBaiduPlace(), latlng.latitude + "", latlng.longitude + ""  );
 		}
 	}
 }

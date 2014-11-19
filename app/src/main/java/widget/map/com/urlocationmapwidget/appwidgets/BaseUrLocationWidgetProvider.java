@@ -1,18 +1,28 @@
 package widget.map.com.urlocationmapwidget.appwidgets;
 
+import java.lang.ref.WeakReference;
+
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
 import android.appwidget.AppWidgetProvider;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
+import android.text.TextUtils;
 import android.widget.RemoteViews;
 
-import widget.map.com.urlocationmapwidget.app.services.BaseService;
-import widget.map.com.urlocationmapwidget.app.activities.MainActivity;
-import widget.map.com.urlocationmapwidget.utils.Prefs;
-import widget.map.com.urlocationmapwidget.app.activities.QuickSettingActivity;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.chopping.net.TaskHelper;
+import com.google.android.gms.maps.model.LatLng;
+
 import widget.map.com.urlocationmapwidget.R;
+import widget.map.com.urlocationmapwidget.app.activities.MainActivity;
+import widget.map.com.urlocationmapwidget.app.activities.QuickSettingActivity;
+import widget.map.com.urlocationmapwidget.app.services.BaseService;
+import widget.map.com.urlocationmapwidget.utils.Prefs;
 import widget.map.com.urlocationmapwidget.utils.Utils;
 
 /**
@@ -21,6 +31,10 @@ import widget.map.com.urlocationmapwidget.utils.Utils;
  * @author Xinyue Zhao
  */
 public abstract class BaseUrLocationWidgetProvider extends AppWidgetProvider {
+	/**
+	 * Make url to place short.
+	 */
+	private static final String TINY = "http://tinyurl.com/api-create.php?url=";
 	/**
 	 * Click event action for open setting.
 	 */
@@ -122,8 +136,36 @@ public abstract class BaseUrLocationWidgetProvider extends AppWidgetProvider {
 		} else if (ACTION_QUICK_SETTING.equals(intent.getAction())) {
 			QuickSettingActivity.showInstance(context);
 		} else if(ACTION_SHARE_LOCATION.equals(intent.getAction())) {
-			String myLastLocation = context.getString(R.string.lbl_share_your_location, prefs.getLastLocation(), prefs.getLastLocationName());
-			Utils.getDefaultShareIntent(context, "", myLastLocation );
+			final WeakReference<Context> appRef = new WeakReference<Context>(context.getApplicationContext());
+			String latlng =  prefs.getLastLocation();
+			if(!TextUtils.isEmpty(latlng)) {
+				String[] latlngs = latlng.split(",");
+				LatLng ll = new LatLng(
+						Double.parseDouble(latlngs[0]),
+						Double.parseDouble(latlngs[1])
+				);
+				StringRequest request = new StringRequest(Request.Method.GET, TINY + prefs.getUrlPlace(ll), new Response.Listener<String>() {
+					@Override
+					public void onResponse(String response) {
+						if(appRef != null && appRef.get() != null) {
+							Context cxt = appRef.get();
+							Prefs p = Prefs.getInstance(cxt);
+							Utils.getDefaultShareIntent(cxt, "", cxt.getString(R.string.lbl_share_your_location, response, p.getLastLocationName()));
+						}
+					}
+				}, new Response.ErrorListener() {
+					@Override
+					public void onErrorResponse(VolleyError error) {
+						if(appRef != null && appRef.get() != null) {
+							Context cxt = appRef.get();
+							Prefs p = Prefs.getInstance(cxt);
+							String myLastLocation = cxt.getString(R.string.lbl_share_your_location, p.getLastLocation(), p.getLastLocationName());
+							Utils.getDefaultShareIntent(cxt, "", myLastLocation);
+						}
+					}
+				});
+				TaskHelper.getRequestQueue().add(request);
+			}
 		}
 	}
 

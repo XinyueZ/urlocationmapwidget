@@ -13,7 +13,8 @@
     <string name="lbl_share_app_content">显示你位置的小组件，可以直接放置在主屏幕。 \n\n下载: http://tinyurl.com/pp6pk5g</string>
     <string name="lbl_last_update">最后更新</string>
     <string name="lbl_location_name">我在哪里了？</string>
-    <string name="lbl_share_your_location">\n\n---------\n发送自我的安桌手机。\n我正在: [%1$s] %2$s 附近。</string>
+    <string name="lbl_share_your_location">\n\n---------\n发送自我的安桌手机。\n我正在:%1$s\n%2$s 附近。</string>
+    <string name="lbl_play_service">本App需要谷歌服务，必须先安装然后使用。</string>
     <string-array name="array_priorities">
         <item>最好，最精确，也最耗电</item>
         <item>平衡电量</item>
@@ -38,5 +39,4 @@
     <string name="btn_confirm">确认</string>
     <string name="btn_agree">同意</string>
     <string name="btn_not_agree">拒绝</string>
-    <string name="lbl_play_service">本App需要谷歌服务，必须先安装然后使用。</string>
 </resources>
