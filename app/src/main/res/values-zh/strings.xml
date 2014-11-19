@@ -22,7 +22,7 @@
     </string-array>
     <string name="msg_locate" >开始定位…</string>
     <string name="msg_stop_locate">中断定位…</string>
-
+    <string name="msg_sharing">分享当前位置…</string>
 
     <string name="menu_share_app">分享App</string>
     <string name="menu_about">关于</string>
@@ -37,6 +37,7 @@
             b)谷歌服务条款(http://www.google.com/intl/en/policies/terms/)，谷歌隐私政策(http://www.google.com/intl/en/policies/privacy/). c)任何谷歌服务特定的服务条款和隐私政策。谷歌服务条款和隐私政策可能会不定时更新，恕不另行通知。\n\n一旦您使用了本应用程序，即表示您同意我们根据谷歌的隐私政策和服务条款使用您的数据和相关硬件权限。</string>
 
     <string name="btn_confirm">确认</string>
+    <string name="btn_cancel">取消</string>
     <string name="btn_agree">同意</string>
     <string name="btn_not_agree">拒绝</string>
 </resources>

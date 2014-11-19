@@ -20,6 +20,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import widget.map.com.urlocationmapwidget.R;
 import widget.map.com.urlocationmapwidget.app.activities.MainActivity;
+import widget.map.com.urlocationmapwidget.app.activities.ProgressBarActivity;
 import widget.map.com.urlocationmapwidget.app.activities.QuickSettingActivity;
 import widget.map.com.urlocationmapwidget.app.services.BaseService;
 import widget.map.com.urlocationmapwidget.utils.Prefs;
@@ -139,6 +140,7 @@ public abstract class BaseUrLocationWidgetProvider extends AppWidgetProvider {
 			final WeakReference<Context> appRef = new WeakReference<Context>(context.getApplicationContext());
 			String latlng =  prefs.getLastLocation();
 			if(!TextUtils.isEmpty(latlng)) {
+				ProgressBarActivity.showInstance(context);
 				String[] latlngs = latlng.split(",");
 				LatLng ll = new LatLng(
 						Double.parseDouble(latlngs[0]),
@@ -150,6 +152,7 @@ public abstract class BaseUrLocationWidgetProvider extends AppWidgetProvider {
 						if(appRef != null && appRef.get() != null) {
 							Context cxt = appRef.get();
 							Prefs p = Prefs.getInstance(cxt);
+							ProgressBarActivity.closeInstance(cxt);
 							Utils.getDefaultShareIntent(cxt, "", cxt.getString(R.string.lbl_share_your_location, response, p.getLastLocationName()));
 						}
 					}
@@ -159,6 +162,7 @@ public abstract class BaseUrLocationWidgetProvider extends AppWidgetProvider {
 						if(appRef != null && appRef.get() != null) {
 							Context cxt = appRef.get();
 							Prefs p = Prefs.getInstance(cxt);
+							ProgressBarActivity.closeInstance(cxt);
 							String myLastLocation = cxt.getString(R.string.lbl_share_your_location, p.getLastLocation(), p.getLastLocationName());
 							Utils.getDefaultShareIntent(cxt, "", myLastLocation);
 						}

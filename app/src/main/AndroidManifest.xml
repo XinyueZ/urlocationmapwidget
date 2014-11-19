@@ -37,8 +37,15 @@
         <activity
             android:name=".app.activities.QuickSettingActivity"
             android:label="@string/application_name"
-            android:theme="@android:style/Theme.Holo.Dialog"
+            android:theme="@style/Theme.AppCompat.Dialog"
             android:taskAffinity="widget.map.com.urlocationmapwidget.QUICK_SETTING"
+            android:excludeFromRecents="true" />
+
+        <activity
+            android:name=".app.activities.ProgressBarActivity"
+            android:label="@string/application_name"
+            android:theme="@style/Theme.AppCompat.Dialog"
+            android:taskAffinity="widget.map.com.urlocationmapwidget.PROGRESS"
             android:excludeFromRecents="true" />
 
         <receiver

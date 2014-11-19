@@ -22,7 +22,7 @@
     </string-array>
     <string name="msg_locate">Locating…</string>
     <string name="msg_stop_locate">Stop locating your position…</string>
-
+    <string name="msg_sharing">Your location will be shared…</string>
 
 
     <string name="menu_share_app">Share this</string>
@@ -44,6 +44,7 @@
 
     <string name="btn_confirm">Confirm</string>
     <string name="btn_ok">Ok</string>
+    <string name="btn_cancel">Cancel</string>
     <string name="btn_agree">I agree.</string>
     <string name="btn_not_agree">I do not agree.</string>
     <string name="play_service_url">market://details?id=com.google.android.gms</string>

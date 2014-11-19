@@ -22,12 +22,14 @@
     </string-array>
     <string name="msg_locate">Lokalisiert…</string>
     <string name="msg_stop_locate">Lokalisierung wird angehalten…</string>
+    <string name="msg_sharing">Deine Location wird geteilt…</string>
 
 
     <string name="menu_share_app">Teile diese App</string>
     <string name="menu_about">Über mich</string>
 
     <string name="btn_confirm">Sicher</string>
+    <string name="btn_cancel">Abbrechen</string>
     <string name="btn_agree">Stimme zu.</string>
     <string name="btn_not_agree">Stimme nicht zu.</string>
 
