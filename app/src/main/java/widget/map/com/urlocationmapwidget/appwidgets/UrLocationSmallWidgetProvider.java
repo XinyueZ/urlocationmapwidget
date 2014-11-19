@@ -1,9 +1,11 @@
-package widget.map.com.urlocationmapwidget;
+package widget.map.com.urlocationmapwidget.appwidgets;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
 import android.content.Context;
 import android.widget.RemoteViews;
+
+import widget.map.com.urlocationmapwidget.R;
 
 /**
  * The provider for this widget.

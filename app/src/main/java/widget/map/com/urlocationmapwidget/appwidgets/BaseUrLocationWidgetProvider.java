@@ -1,4 +1,4 @@
-package widget.map.com.urlocationmapwidget;
+package widget.map.com.urlocationmapwidget.appwidgets;
 
 import android.app.PendingIntent;
 import android.appwidget.AppWidgetManager;
@@ -7,6 +7,13 @@ import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.widget.RemoteViews;
+
+import widget.map.com.urlocationmapwidget.app.services.BaseService;
+import widget.map.com.urlocationmapwidget.app.activities.MainActivity;
+import widget.map.com.urlocationmapwidget.utils.Prefs;
+import widget.map.com.urlocationmapwidget.app.activities.QuickSettingActivity;
+import widget.map.com.urlocationmapwidget.R;
+import widget.map.com.urlocationmapwidget.utils.Utils;
 
 /**
  * The basic provider for this widget.
@@ -50,7 +57,7 @@ public abstract class BaseUrLocationWidgetProvider extends AppWidgetProvider {
 	/**
 	 * Click event action for enable locating.
 	 */
-	static final String ACTION_ENABLE_LOCATING = "widget.map.com.urlocationmapwidget.ENABLE_LOCATING";
+	public static final String ACTION_ENABLE_LOCATING = "widget.map.com.urlocationmapwidget.ENABLE_LOCATING";
 
 
 	@Override

@@ -1,4 +1,4 @@
-package widget.map.com.urlocationmapwidget;
+package widget.map.com.urlocationmapwidget.app.activities;
 
 import android.app.Activity;
 import android.content.Context;
@@ -11,6 +11,10 @@ import android.widget.SeekBar;
 import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import widget.map.com.urlocationmapwidget.utils.Prefs;
+import widget.map.com.urlocationmapwidget.R;
+import widget.map.com.urlocationmapwidget.utils.Utils;
 
 /**
  * A dialog like {@link android.app.Activity} give user chance to set update interval, battery optimizing etc..

@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".App"
+        android:name=".app.App"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/application_name"
@@ -24,7 +24,7 @@
         android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".MainActivity"
+            android:name=".app.activities.MainActivity"
             android:label="@string/application_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,7 +35,7 @@
 
 
         <activity
-            android:name=".QuickSettingActivity"
+            android:name=".app.activities.QuickSettingActivity"
             android:label="@string/application_name"
             android:theme="@android:style/Theme.Holo.Dialog"
             android:taskAffinity="widget.map.com.urlocationmapwidget.QUICK_SETTING"
@@ -43,7 +43,7 @@
 
         <receiver
             android:icon="@drawable/large_preview"
-            android:name=".UrLocationWidgetProvider"
+            android:name=".appwidgets.UrLocationWidgetProvider"
             android:label="@string/application_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -65,7 +65,7 @@
 
         <receiver
             android:icon="@drawable/small_preview"
-            android:name=".UrLocationSmallWidgetProvider"
+            android:name=".appwidgets.UrLocationSmallWidgetProvider"
             android:label="@string/application_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -84,7 +84,7 @@
 
 
         <receiver
-            android:name=".BootReceiver"
+            android:name=".app.receivers.BootReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -92,12 +92,12 @@
         </receiver>
 
         <service
-            android:name=".UrLocationWidgetService"
+            android:name=".app.services.UrLocationWidgetService"
             android:enabled="true"
             android:exported="false" />
 
         <service
-            android:name=".UrLocationSmallWidgetService"
+            android:name=".app.services.UrLocationSmallWidgetService"
             android:enabled="true"
             android:exported="false" />
 

@@ -70,7 +70,7 @@
     </ScrollView>
 
 
-    <widget.map.com.urlocationmapwidget.OneDirectionScrollView
+    <widget.map.com.urlocationmapwidget.views.OneDirectionScrollView
         android:layout_width="250dp"
         android:layout_gravity="left"
         android:scrollbars="none"
@@ -90,5 +90,5 @@
                 android:layout_height="match_parent" />
 
         </LinearLayout>
-    </widget.map.com.urlocationmapwidget.OneDirectionScrollView>
+    </widget.map.com.urlocationmapwidget.views.OneDirectionScrollView>
 </android.support.v4.widget.DrawerLayout>

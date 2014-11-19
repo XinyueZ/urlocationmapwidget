@@ -1,4 +1,4 @@
-package widget.map.com.urlocationmapwidget;
+package widget.map.com.urlocationmapwidget.app.activities;
 
 import android.app.AlertDialog;
 import android.content.Context;
@@ -29,7 +29,13 @@ import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
-import static widget.map.com.urlocationmapwidget.UrLocationWidgetProvider.ACTION_ENABLE_LOCATING;
+import widget.map.com.urlocationmapwidget.app.fragments.AboutDialogFragment;
+import widget.map.com.urlocationmapwidget.app.fragments.AppListImplFragment;
+import widget.map.com.urlocationmapwidget.utils.Prefs;
+import widget.map.com.urlocationmapwidget.R;
+import widget.map.com.urlocationmapwidget.utils.Utils;
+
+import static widget.map.com.urlocationmapwidget.appwidgets.UrLocationWidgetProvider.ACTION_ENABLE_LOCATING;
 
 /**
  * Main view for the application, you can select different map types.

@@ -1,4 +1,4 @@
-package widget.map.com.urlocationmapwidget;
+package widget.map.com.urlocationmapwidget.app.services;
 
 import android.appwidget.AppWidgetManager;
 import android.content.ComponentName;
@@ -14,6 +14,12 @@ import com.chopping.utils.DeviceUtils;
 import com.chopping.utils.DeviceUtils.ScreenSize;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.model.LatLng;
+
+import widget.map.com.urlocationmapwidget.utils.Prefs;
+import widget.map.com.urlocationmapwidget.R;
+import widget.map.com.urlocationmapwidget.appwidgets.BaseUrLocationWidgetProvider;
+import widget.map.com.urlocationmapwidget.appwidgets.UrLocationWidgetProvider;
+import widget.map.com.urlocationmapwidget.utils.Utils;
 
 /**
  * Service background(main thread) to provide current location of user for widget.
@@ -44,7 +50,7 @@ public final class UrLocationWidgetService extends BaseService {
 		if (location != null) {
 			Prefs prefs = Prefs.getInstance(getApplication());
 			//Baidu can not accept size more than 1024! We needs width == height.
-			String url = prefs.getMap(new LatLng(location.getLatitude(), location.getLongitude()),
+			String url = prefs.getUrlMap(new LatLng(location.getLatitude(), location.getLongitude()),
 					prefs.getCurrentMap() == Prefs.BAIDU_MAP ? (mScreenSize.Width > 1000 ? 1000 : mScreenSize.Width) :
 							mScreenSize.Width,
 					prefs.getCurrentMap() == Prefs.BAIDU_MAP ? (mScreenSize.Width > 1000 ? 1000 : mScreenSize.Width) :
@@ -71,8 +77,7 @@ public final class UrLocationWidgetService extends BaseService {
 		RemoteViews views = new RemoteViews(getPackageName(), LAYOUT_WIDGET);
 		views.setImageViewBitmap(R.id.urlocation_iv, response.getBitmap());
 		views.setTextViewText(R.id.last_update_tv,
-				widget.map.com.urlocationmapwidget.Utils.convertTimestamps2DateString(this,
-						System.currentTimeMillis()));
+				Utils.convertTimestamps2DateString(this, System.currentTimeMillis()));
 		ComponentName thisWidget = new ComponentName(this, UrLocationWidgetProvider.class);
 		AppWidgetManager.getInstance(this).updateAppWidget(thisWidget, views);
 	}

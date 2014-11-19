@@ -1,4 +1,4 @@
-package widget.map.com.urlocationmapwidget;
+package widget.map.com.urlocationmapwidget.app.fragments;
 
 import android.app.AlertDialog;
 import android.app.Application;
@@ -22,6 +22,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
+
+import widget.map.com.urlocationmapwidget.utils.Prefs;
+import widget.map.com.urlocationmapwidget.R;
 
 
 /**

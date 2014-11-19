@@ -1,4 +1,4 @@
-package widget.map.com.urlocationmapwidget;
+package widget.map.com.urlocationmapwidget.app.services;
 
 import android.content.Intent;
 import android.location.Location;
@@ -7,6 +7,11 @@ import android.os.IBinder;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader.ImageContainer;
 import com.google.android.gms.common.ConnectionResult;
+
+import widget.map.com.urlocationmapwidget.utils.Prefs;
+import widget.map.com.urlocationmapwidget.R;
+import widget.map.com.urlocationmapwidget.appwidgets.BaseUrLocationWidgetProvider;
+import widget.map.com.urlocationmapwidget.appwidgets.UrLocationSmallWidgetProvider;
 
 /**
  * Service background(main thread) to provide current location of user for widget.
@@ -40,7 +45,7 @@ public final class UrLocationSmallWidgetService extends BaseService {
 	}
 
 	/**
-	 * Constructor of {@link widget.map.com.urlocationmapwidget.UrLocationSmallWidgetService}, no usage.
+	 * Constructor of {@link UrLocationSmallWidgetService}, no usage.
 	 */
 	public UrLocationSmallWidgetService() {
 		//Not used.

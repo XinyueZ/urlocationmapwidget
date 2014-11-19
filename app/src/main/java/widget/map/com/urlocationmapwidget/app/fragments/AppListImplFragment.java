@@ -1,10 +1,12 @@
-package widget.map.com.urlocationmapwidget;
+package widget.map.com.urlocationmapwidget.app.fragments;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 
 import com.chopping.application.BasicPrefs;
 import com.chopping.fragments.AppListFragment;
+
+import widget.map.com.urlocationmapwidget.utils.Prefs;
 
 /**
  * Impl. for the {@link com.chopping.fragments.AppListFragment}.

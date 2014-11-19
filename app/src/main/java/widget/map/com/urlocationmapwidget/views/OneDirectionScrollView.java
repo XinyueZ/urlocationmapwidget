@@ -1,4 +1,4 @@
-package widget.map.com.urlocationmapwidget;
+package widget.map.com.urlocationmapwidget.views;
 
 import android.content.Context;
 import android.util.AttributeSet;

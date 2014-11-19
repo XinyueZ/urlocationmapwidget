@@ -1,7 +1,10 @@
-package widget.map.com.urlocationmapwidget;
+package widget.map.com.urlocationmapwidget.utils;
 
 import android.content.Context;
 import android.content.Intent;
+
+import widget.map.com.urlocationmapwidget.app.services.UrLocationSmallWidgetService;
+import widget.map.com.urlocationmapwidget.app.services.UrLocationWidgetService;
 
 import static android.text.format.DateUtils.FORMAT_ABBREV_MONTH;
 import static android.text.format.DateUtils.FORMAT_SHOW_DATE;
@@ -16,7 +19,7 @@ import static android.text.format.DateUtils.formatDateTime;
  */
 public final class Utils {
 	/**
-	 * Start or stop the {@link widget.map.com.urlocationmapwidget.UrLocationWidgetService}  and {@link widget.map.com.urlocationmapwidget.UrLocationSmallWidgetService}to require current location
+	 * Start or stop the {@link widget.map.com.urlocationmapwidget.app.services.UrLocationWidgetService}  and {@link widget.map.com.urlocationmapwidget.app.services.UrLocationSmallWidgetService}to require current location
 	 * with different priorities.
 	 *
 	 * @param context

@@ -1,4 +1,6 @@
-package widget.map.com.urlocationmapwidget;
+package widget.map.com.urlocationmapwidget.appwidgets;
+
+import widget.map.com.urlocationmapwidget.R;
 
 /**
  * The provider for this widget.

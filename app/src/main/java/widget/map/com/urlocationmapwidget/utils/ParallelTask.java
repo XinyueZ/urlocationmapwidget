@@ -1,4 +1,4 @@
-package widget.map.com.urlocationmapwidget;
+package widget.map.com.urlocationmapwidget.utils;
 
 import android.os.AsyncTask;
 import android.os.Build;

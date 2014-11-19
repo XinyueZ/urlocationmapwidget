@@ -1,4 +1,4 @@
-package widget.map.com.urlocationmapwidget;
+package widget.map.com.urlocationmapwidget.app.receivers;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;

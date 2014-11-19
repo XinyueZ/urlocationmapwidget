@@ -29,12 +29,16 @@
 //                  奔驰宝马贵者趣，公交自行程序员。
 //                  别人笑我忒疯癫，我笑自己命太贱。
 
-package widget.map.com.urlocationmapwidget;
+package widget.map.com.urlocationmapwidget.app;
 
 import android.app.Application;
 import android.content.Intent;
 
 import com.chopping.net.TaskHelper;
+
+import widget.map.com.urlocationmapwidget.utils.Prefs;
+import widget.map.com.urlocationmapwidget.app.services.UrLocationSmallWidgetService;
+import widget.map.com.urlocationmapwidget.app.services.UrLocationWidgetService;
 
 /**
  * Application object.

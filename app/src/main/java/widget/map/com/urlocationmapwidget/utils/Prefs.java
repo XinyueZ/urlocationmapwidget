@@ -1,4 +1,6 @@
-package widget.map.com.urlocationmapwidget;
+package widget.map.com.urlocationmapwidget.utils;
+
+import java.util.Locale;
 
 import android.content.Context;
 import android.location.Location;
@@ -62,11 +64,11 @@ public final class Prefs extends BasicPrefs {
 	 */
 	private static Prefs sInstance;
 	/**
-	 * Url to the google map.
+	 * Url to the Google Inc. map.
 	 */
 	private static final String KEY_GOOGLE_MAP = "google_map";
 	/**
-	 * Url to the baidu map.
+	 * Url to the Baidu Inc. map.
 	 */
 	private static final String KEY_BAIDU_MAP = "baidu_map";
 	/**
@@ -107,6 +109,14 @@ public final class Prefs extends BasicPrefs {
 	 * Last location name that has been caught.
 	 */
 	private static final String KEY_LAST_LOCATION_NAME = "key_last_location_name";
+	/**
+	 * Url for geocode of Google Inc.
+	 */
+	private static final String KEY_GOOGLE_GEOCODE="google_geocode";
+	/**
+	 * Url for geocode of Baidu Inc.
+	 */
+	private static final String KEY_BAIDU_GEOCODE = "baidu_geocode";
 
 	/**
 	 * Created a DeviceData storage.
@@ -182,7 +192,7 @@ public final class Prefs extends BasicPrefs {
 	 * &markers=color:blue%7Clabel:S%7C40.702147,-74.015794&markers=color:green%7Clabel:G%7C40.711614,-74.012318
 	 * &markers=color:red%7Clabel:C%7C40.718217,-73.998284}
 	 */
-	public String getUrlGoogle() {
+	private String getUrlGoogle() {
 		return getString(KEY_GOOGLE_MAP, null);
 	}
 
@@ -195,7 +205,7 @@ public final class Prefs extends BasicPrefs {
 	 * <p/>
 	 * {@code http://api.map.baidu.com/staticimage?center=116.403874,39.914888&width=768&height=1000&zoom=19&markers=116.403874,39.914888&markerStyles=m,A}
 	 */
-	public String getUrlBaidu() {
+	private String getUrlBaidu() {
 		return getString(KEY_BAIDU_MAP, null);
 	}
 
@@ -215,11 +225,11 @@ public final class Prefs extends BasicPrefs {
 	 * @return The final url to the static map.
 	 */
 	public String getMap(LatLng latlng, int width, int height) {
-		return getMap(latlng, width, height, DEFAULT_ZOOM_LEVEL);
+		return getUrlMap(latlng, width, height, DEFAULT_ZOOM_LEVEL);
 	}
 
 	/**
-	 * Get map url.
+	 * Get API to get map of different providers.
 	 *
 	 * @param latlng
 	 * 		{@link com.google.android.gms.maps.model.LatLng} for center.
@@ -235,7 +245,7 @@ public final class Prefs extends BasicPrefs {
 	 *
 	 * @return The final url to the static map.
 	 */
-	public String getMap(LatLng latlng, int width, int height, int zoom) {
+	public String getUrlMap(LatLng latlng, int width, int height, int zoom) {
 		if (getCurrentMap() == GOOGLE_MAP) {
 			return String.format(getUrlGoogle(), latlng.latitude + "", latlng.longitude + "", width + "", height + "",
 					zoom, latlng.latitude + "", latlng.longitude + "");
@@ -405,5 +415,35 @@ public final class Prefs extends BasicPrefs {
 	 */
 	public   String getLastLocationName() {
 		return getString(KEY_LAST_LOCATION_NAME, null);
+	}
+
+	/**
+	 * Get API of Google Inc. geocode.
+	 * @return Url of API.
+	 */
+	private String getUrlGoogleGeocode() {
+		return getString(KEY_GOOGLE_GEOCODE, null);
+	}
+
+	/**
+	 * Get API of Baidu Inc. geocode.
+	 * @return Url of API.
+	 */
+	private String getUrlBaiduGeocode() {
+		return getString(KEY_BAIDU_GEOCODE, null);
+	}
+
+	/**
+	 * Get API of geocode of different providers.
+	 * @param latlng  Latitude and Longitude.
+	 * @return Url of API.
+	 */
+	public String getUrlGeocode(LatLng latlng) {
+		String lang = Locale.getDefault().getDisplayLanguage();
+		if (getCurrentMap() == GOOGLE_MAP) {
+			return String.format(getUrlGoogleGeocode(), latlng.latitude + "", latlng.longitude + "", lang);
+		} else {
+			return String.format(getUrlBaiduGeocode(), latlng.latitude + "", latlng.longitude + "", lang);
+		}
 	}
 }
