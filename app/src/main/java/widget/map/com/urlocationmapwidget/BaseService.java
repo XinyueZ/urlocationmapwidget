@@ -120,16 +120,20 @@ public abstract class BaseService extends Service implements ConnectionCallbacks
 
 	@Override
 	public void onConnected(Bundle bundle) {
-		LocationClient lc = getLocationClient();
-		LocationRequest lr = getLocationRequest();
+		try {
+			LocationClient lc = getLocationClient();
+			LocationRequest lr = getLocationRequest();
 
-		Location location = mLocationClient.getLastLocation();
-		if(location != null) {
-			setAddress(location);
-		}
+			Location location = mLocationClient.getLastLocation();
+			if (location != null) {
+				setAddress(location);
+			}
 
-		if (lc != null && lc.isConnected() && lc != null && lr != null) {
-			lc.requestLocationUpdates(lr, this);
+			if (lc != null && lc.isConnected() && lc != null && lr != null) {
+				lc.requestLocationUpdates(lr, this);
+			}
+		} catch (IllegalStateException e) {
+			//Ignore the case.
 		}
 	}
 
