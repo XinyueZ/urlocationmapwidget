@@ -19,6 +19,7 @@ import com.chopping.net.TaskHelper;
 import com.google.android.gms.maps.model.LatLng;
 
 import widget.map.com.urlocationmapwidget.R;
+import widget.map.com.urlocationmapwidget.app.activities.FBCheckInActivity;
 import widget.map.com.urlocationmapwidget.app.activities.MainActivity;
 import widget.map.com.urlocationmapwidget.app.activities.ProgressBarActivity;
 import widget.map.com.urlocationmapwidget.app.activities.QuickSettingActivity;
@@ -74,6 +75,10 @@ public abstract class BaseUrLocationWidgetProvider extends AppWidgetProvider {
 	 */
 	public static final String ACTION_ENABLE_LOCATING = "widget.map.com.urlocationmapwidget.ENABLE_LOCATING";
 
+	/**
+	 * CheckIn on Facebook.
+	 */
+	private static final String ACTION_FB_CHECK_IN = "widget.map.com.urlocationmapwidget.FB_CHECK_IN";
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
@@ -99,6 +104,8 @@ public abstract class BaseUrLocationWidgetProvider extends AppWidgetProvider {
 			views.setOnClickPendingIntent(R.id.urlocation_iv, buildViewClickIntent(context, ACTION_CLICK_MAP));
 			views.setOnClickPendingIntent(R.id.quick_setting_btn, buildViewClickIntent(context, ACTION_QUICK_SETTING));
 			views.setOnClickPendingIntent(R.id.share_your_location_btn, buildViewClickIntent(context, ACTION_SHARE_LOCATION));
+			views.setOnClickPendingIntent(R.id.fb_check_in_btn, buildViewClickIntent(context, ACTION_FB_CHECK_IN));
+
 			appWidgetManager.updateAppWidget(thisWidget, views);
 		}
 	}
@@ -170,6 +177,8 @@ public abstract class BaseUrLocationWidgetProvider extends AppWidgetProvider {
 				});
 				TaskHelper.getRequestQueue().add(request);
 			}
+		} else if(ACTION_FB_CHECK_IN.equals(intent.getAction())) {
+			FBCheckInActivity.showInstance(context);
 		}
 	}
 

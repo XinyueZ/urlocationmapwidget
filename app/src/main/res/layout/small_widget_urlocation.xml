@@ -1,73 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent">
 
 
     <LinearLayout
+        android:layout_gravity="top|center_horizontal"
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="match_parent">
+        android:background="@color/setting_bg"
+        android:layout_height="wrap_content"
+        android:weightSum="5"
+        android:orientation="horizontal">
 
+        <ImageButton
+            android:id="@id/setting_btn"
+            android:src="@drawable/ic_setting_btn"
+            style="@style/Widget_ImageButton" />
 
-        <LinearLayout
-            android:layout_gravity="top|center_horizontal"
-            android:layout_width="match_parent"
-            android:background="@color/setting_bg"
-            android:layout_height="wrap_content"
-            android:weightSum="5"
-            android:orientation="horizontal">
+        <ImageButton
+            android:id="@id/update_btn"
+            android:src="@drawable/ic_only_refresh_btn"
+            style="@style/Widget_ImageButton" />
 
-            <ImageButton
-                android:id="@id/setting_btn"
-                android:src="@drawable/ic_setting_btn"
-                style="@style/Widget_ImageButton" />
+        <ImageButton
+            android:id="@id/quick_setting_btn"
+            android:src="@drawable/ic_quick_setting_btn"
+            style="@style/Widget_ImageButton" />
 
-            <ImageButton
-                android:id="@id/update_btn"
-                android:src="@drawable/ic_only_refresh_btn"
-                style="@style/Widget_ImageButton" />
+        <ImageButton
+            android:id="@id/locate_btn"
+            android:src="@drawable/ic_locate_btn"
+            style="@style/Widget_ImageButton" />
 
-            <ImageButton
-                android:id="@id/quick_setting_btn"
-                android:src="@drawable/ic_quick_setting_btn"
-                style="@style/Widget_ImageButton" />
-
-            <ImageButton
-                android:id="@id/locate_btn"
-                android:src="@drawable/ic_locate_btn"
-                style="@style/Widget_ImageButton" />
-
-            <ImageButton
-                android:id="@id/share_your_location_btn"
-                android:src="@drawable/ic_share_your_location"
-                style="@style/Widget_ImageButton" />
-        </LinearLayout>
-
-
-        <LinearLayout
-            android:id="@+id/buttons_ll"
-            android:layout_width="match_parent"
-            android:layout_marginTop="2dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
-
-            <TextView
-                android:id="@id/last_update_tv"
-                style="@style/Small_Widget_Label_TextView"
-                android:textColor="@color/last_update_text"
-                android:background="@color/last_update_bg"
-                android:text="@string/lbl_last_update" />
-
-            <TextView
-                android:id="@id/location_name_tv"
-                android:background="@color/location_name_bg"
-                android:textColor="@color/location_name_text"
-                android:text="@string/lbl_location_name"
-                style="@style/Small_Widget_Label_TextView" />
-        </LinearLayout>
-
+        <ImageButton
+            android:id="@id/share_your_location_btn"
+            android:src="@drawable/ic_share_your_location"
+            style="@style/Widget_ImageButton" />
     </LinearLayout>
 
-</FrameLayout>
+
+    <LinearLayout
+        android:id="@+id/buttons_ll"
+        android:layout_width="match_parent"
+        android:layout_marginTop="2dp"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@id/last_update_tv"
+            style="@style/Small_Widget_Label_TextView"
+            android:textColor="@color/last_update_text"
+            android:background="@color/last_update_bg"
+            android:text="@string/lbl_last_update" />
+
+        <TextView
+            android:id="@id/location_name_tv"
+            android:background="@color/location_name_bg"
+            android:textColor="@color/location_name_text"
+            android:text="@string/lbl_location_name"
+            style="@style/Small_Widget_Label_TextView" />
+    </LinearLayout>
+
+    <ImageButton
+        android:id="@+id/fb_check_in_btn"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:scaleType="fitXY"
+        android:background="@drawable/selector_bg1_btn"
+        android:src="@drawable/ic_fb_check_in_btn"
+        android:layout_gravity="bottom|right" />
+
+</LinearLayout>

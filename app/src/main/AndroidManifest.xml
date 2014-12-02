@@ -12,7 +12,7 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".app.App"
+        android:name="widget.map.com.urlocationmapwidget.app.App"
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/application_name"
@@ -24,7 +24,7 @@
         android:value="@integer/google_play_services_version" />
 
         <activity
-            android:name=".app.activities.MainActivity"
+            android:name="widget.map.com.urlocationmapwidget.app.activities.MainActivity"
             android:label="@string/application_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,25 +32,28 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
-
         <activity
-            android:name=".app.activities.QuickSettingActivity"
+            android:name="widget.map.com.urlocationmapwidget.app.activities.QuickSettingActivity"
+            android:excludeFromRecents="true"
             android:label="@string/application_name"
-            android:theme="@style/Theme.AppCompat.Dialog"
             android:taskAffinity="widget.map.com.urlocationmapwidget.QUICK_SETTING"
-            android:excludeFromRecents="true" />
+            android:theme="@style/Theme.AppCompat.Dialog" />
+        <activity
+            android:name="widget.map.com.urlocationmapwidget.app.activities.ProgressBarActivity"
+            android:excludeFromRecents="true"
+            android:label="@string/application_name"
+            android:taskAffinity="widget.map.com.urlocationmapwidget.PROGRESS"
+            android:theme="@style/Theme.AppCompat.Dialog" />
 
         <activity
-            android:name=".app.activities.ProgressBarActivity"
-            android:label="@string/application_name"
-            android:theme="@style/Theme.AppCompat.Dialog"
-            android:taskAffinity="widget.map.com.urlocationmapwidget.PROGRESS"
-            android:excludeFromRecents="true" />
+            android:name="widget.map.com.urlocationmapwidget.app.activities.FBCheckInActivity"
+            android:excludeFromRecents="true"
+            android:taskAffinity="widget.map.com.urlocationmapwidget.FB_CHECK_IN"
+            android:theme="@style/Theme.AppCompat.Dialog" />
 
         <receiver
+            android:name="widget.map.com.urlocationmapwidget.appwidgets.UrLocationWidgetProvider"
             android:icon="@drawable/large_preview"
-            android:name=".appwidgets.UrLocationWidgetProvider"
             android:label="@string/application_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -63,16 +66,16 @@
                 <action android:name="widget.map.com.urlocationmapwidget.CLICK_MAP" />
                 <action android:name="widget.map.com.urlocationmapwidget.QUICK_SETTING" />
                 <action android:name="widget.map.com.urlocationmapwidget.SHARE_LOCATION" />
+                <action android:name="widget.map.com.urlocationmapwidget.FB_CHECK_IN" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget" />
         </receiver>
-
-
         <receiver
+            android:name="widget.map.com.urlocationmapwidget.appwidgets.UrLocationSmallWidgetProvider"
             android:icon="@drawable/small_preview"
-            android:name=".appwidgets.UrLocationSmallWidgetProvider"
             android:label="@string/application_name">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
@@ -83,15 +86,15 @@
                 <action android:name="widget.map.com.urlocationmapwidget.CLICK_MAP" />
                 <action android:name="widget.map.com.urlocationmapwidget.QUICK_SETTING" />
                 <action android:name="widget.map.com.urlocationmapwidget.SHARE_LOCATION" />
+                <action android:name="widget.map.com.urlocationmapwidget.FB_CHECK_IN" />
             </intent-filter>
+
             <meta-data
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_small" />
         </receiver>
-
-
         <receiver
-            android:name=".app.receivers.BootReceiver"
+            android:name="widget.map.com.urlocationmapwidget.app.receivers.BootReceiver"
             android:enabled="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
@@ -99,16 +102,15 @@
         </receiver>
 
         <service
-            android:name=".app.services.UrLocationWidgetService"
+            android:name="widget.map.com.urlocationmapwidget.app.services.UrLocationWidgetService"
             android:enabled="true"
             android:exported="false" />
-
         <service
-            android:name=".app.services.UrLocationSmallWidgetService"
+            android:name="widget.map.com.urlocationmapwidget.app.services.UrLocationSmallWidgetService"
             android:enabled="true"
             android:exported="false" />
 
-        <!--Event handler for changing system packages.-->
+        <!-- Event handler for changing system packages. -->
         <receiver
             android:name="com.chopping.application.InstalledAppReceiver"
             android:enabled="true"
@@ -121,10 +123,10 @@
             </intent-filter>
         </receiver>
 
-
         <meta-data
             android:name="com.crashlytics.ApiKey"
             android:value="0bf5835ac1569fe382ff64839c0be3d3ed9396b9" />
+
     </application>
 
 </manifest>

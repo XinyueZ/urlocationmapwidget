@@ -98,6 +98,15 @@
                     android:text="@string/lbl_location_name"
                     style="@style/Widget_Label_TextView" />
             </LinearLayout>
+
+            <ImageButton
+                android:id="@+id/fb_check_in_btn"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:scaleType="fitXY"
+                android:background="@drawable/selector_bg1_btn"
+                android:src="@drawable/ic_fb_check_in_btn"
+                android:layout_gravity="bottom|right" />
         </FrameLayout>
 
     </LinearLayout>
