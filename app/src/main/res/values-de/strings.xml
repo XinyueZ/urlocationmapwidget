@@ -32,6 +32,6 @@
     <string name="btn_cancel">Abbrechen</string>
     <string name="btn_agree">Stimme zu.</string>
     <string name="btn_not_agree">Stimme nicht zu.</string>
-    <string name="lbl_confirm_check_in">Bist Du sicher, auf Facebook einzuchecken, deine Location zu teilen?</string>
+    <string name="lbl_confirm_check_in">Hallo %s, bist Du sicher, auf Facebook einzuchecken, deine Location zu teilen?</string>
 
 </resources>

@@ -16,7 +16,7 @@
     <string name="lbl_location_name">Where am I?</string>
     <string name="lbl_share_your_location">\n\n---------\nFrom my Android Handy.\nI\'m here:%1$s\n%2$s.</string>
     <string name="lbl_play_service">This application needs Google Play Service, you must install it first.</string>
-    <string name="lbl_confirm_check_in">Do you want to do Check-In on your Facebook page to share your current location?</string>
+    <string name="lbl_confirm_check_in">Hi %s, do you want to do Check-In on your Facebook page to share your current location?</string>
     <string-array name="array_priorities">
         <item>Fine, best, high accuracy</item>
         <item>Balanced power accuracy</item>
@@ -51,5 +51,6 @@
     <string name="title_activity_fbcheck_in">FB CheckIn</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+    <string name="applicationId">1511309452456948</string>
 
 </resources>

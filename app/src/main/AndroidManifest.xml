@@ -50,7 +50,10 @@
             android:excludeFromRecents="true"
             android:taskAffinity="widget.map.com.urlocationmapwidget.FB_CHECK_IN"
             android:theme="@style/Theme.AppCompat.Dialog" />
-
+        <activity
+            android:name="com.facebook.LoginActivity"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
         <receiver
             android:name="widget.map.com.urlocationmapwidget.appwidgets.UrLocationWidgetProvider"
             android:icon="@drawable/large_preview"
@@ -127,6 +130,9 @@
             android:name="com.crashlytics.ApiKey"
             android:value="0bf5835ac1569fe382ff64839c0be3d3ed9396b9" />
 
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/applicationId"/>
     </application>
 
 </manifest>
