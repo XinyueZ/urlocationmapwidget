@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -80,7 +81,10 @@ public class FBCheckInActivity extends Activity {
 			}
 		}
 	};
-
+	/**
+	 * Progress indicator.
+	 */
+	private ProgressDialog mPb;
 	/**
 	 * Show single instance of {@link FBCheckInActivity}
 	 *
@@ -107,16 +111,19 @@ public class FBCheckInActivity extends Activity {
 		//Show a user name to confirm that FB connection has been established.
 		Session session = Session.getActiveSession();
 		if (session == null || !session.isOpened()) {
-			Session.openActiveSession(this, true, PERMISSIONS, new Session.StatusCallback() {
-				@Override
-				public void call(Session session, SessionState state, Exception exception) {
-					if (state == SessionState.CLOSED_LOGIN_FAILED) {
-						finish();
-					} else {
-						makeUserInfoRequest(session);
-					}
-				}
-			});
+			session = new Session(this);
+			Session.setActiveSession(session);
+			session.openForPublish(new Session.OpenRequest(this).setPermissions(PERMISSIONS).setCallback(
+					new Session.StatusCallback() {
+						@Override
+						public void call(Session session, SessionState state, Exception exception) {
+							if (state == SessionState.CLOSED_LOGIN_FAILED) {
+								finish();
+							} else {
+								makeUserInfoRequest(session);
+							}
+						}
+					}));
 		} else {
 			makeUserInfoRequest(session);
 		}
@@ -239,27 +246,42 @@ public class FBCheckInActivity extends Activity {
 	 */
 	private void makePostWallRequest(final Session session, String lat, String lng, final String locationName) {
 		LatLng ll = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+		mPb = ProgressDialog.show(this, null, getString(R.string.msg_fb_post));
 		StringRequest tinyReq = new StringRequest(com.android.volley.Request.Method.GET, App.TINY + Prefs.getInstance(
 				getApplication()).getUrlPlace(ll), new com.android.volley.Response.Listener<String>() {
 			@Override
-			public void onResponse(String response) {
-				Request request = Request.newStatusUpdateRequest(session, response + locationName, new Callback() {
-					@Override
-					public void onCompleted(Response response) {
-						if (response != null) {
-							finish();
+			public void onResponse(String link) {
+				if (session != null &&  session.isOpened()) {
+					String fmt = getString(R.string.lbl_here);
+					String desc = String.format(fmt, locationName );
+					Request request = Request.newStatusUpdateRequest(session, desc, new Callback() {
+						@Override
+						public void onCompleted(Response response) {
+							if (response != null) {
+								if(mPb!= null&& mPb.isShowing()) {
+									mPb.dismiss();
+								}
+								if(response.getError() != null) {
+									Utils.showLongToast(getApplication(), R.string.msg_fb_post_error);
+								}
+								finish();
+							}
 						}
-					}
-				});
-				request.executeAsync();
+					});
+					Bundle postParams = new Bundle();
+					postParams.putString("description", desc);
+					postParams.putString("link", link );
+					request.setParameters(postParams);
+					request.executeAsync();
+				}
 			}
 		}, new com.android.volley.Response.ErrorListener() {
 			@Override
 			public void onErrorResponse(VolleyError error) {
+				//Tiny-Url error. We do not close view. User can still post.
+				Utils.showLongToast(getApplication(), R.string.msg_fb_post_error);
 			}
 		});
 		TaskHelper.getRequestQueue().add(tinyReq);
 	}
-
-
 }

@@ -44,4 +44,7 @@
     <string name="msg_refresh_plz">请刷新或者启动定位。</string>
     <string name="btn_locating">定位</string>
     <string name="lbl_no_location">你当前没有位置信息，请定位。</string>
+    <string name="lbl_here">我正在这里：%1$s</string>
+    <string name="msg_fb_post">正在联机脸书…</string>
+    <string name="msg_fb_post_error">联机脸书过程中出现错误。</string>
 </resources>

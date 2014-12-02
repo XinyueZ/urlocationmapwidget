@@ -36,5 +36,8 @@
     <string name="msg_refresh_plz">Bitte erst aktualisieren oder lokalisieren.</string>
     <string name="btn_locating">Lokalisiere</string>
     <string name="lbl_no_location">Du hast moment keine Location-Info, bitte lokalisieren!</string>
+    <string name="lbl_here">Ich bin hier: %1$s</string>
+    <string name="msg_fb_post">Poste auf Facebook…</string>
+    <string name="msg_fb_post_error">Ein Fehler trefft, während ich auf Facebook poste.</string>
 
 </resources>
