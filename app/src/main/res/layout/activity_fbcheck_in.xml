@@ -49,19 +49,20 @@
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:onClick="cancel" />
+            android:onClick="cancel"
+            android:textSize="13sp"/>
 
         <Button
             android:text="@string/btn_confirm"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:onClick="confirm" />
+            android:onClick="confirm"     android:textSize="13sp"/>
         <Button
             android:text="@string/btn_locating"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:onClick="locating" />
+            android:onClick="locating"     android:textSize="13sp" />
     </LinearLayout>
 </LinearLayout>

@@ -47,4 +47,5 @@
     <string name="lbl_here">我正在这里：%1$s</string>
     <string name="msg_fb_post">正在联机脸书…</string>
     <string name="msg_fb_post_error">联机脸书过程中出现错误。</string>
+    <string name="msg_fb_prompt">一键！你现在可以直接在脸书上分享你的位置了。</string>
 </resources>

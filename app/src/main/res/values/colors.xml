@@ -9,4 +9,6 @@
     <color name="last_update_text">@android:color/white</color>
     <color name="location_name_text">#0f6ea5</color>
     <color name="no_location_warning">#FF3333</color>
+    <color name="bg_fb_info">#800f6ea5</color>
+    <color name="bg_dlg_btn">#FF3333</color>
 </resources>

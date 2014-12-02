@@ -103,7 +103,7 @@ public final class AboutDialogFragment extends DialogFragment {
 		// Show "About" dialog.
 		LayoutInflater layoutInflater = (LayoutInflater) getActivity().getSystemService(
 				Context.LAYOUT_INFLATER_SERVICE);
-		TextView aboutBodyView = (TextView) layoutInflater.inflate(R.layout.fragment_dialog_about, null);
+		TextView aboutBodyView = (TextView) layoutInflater.inflate(R.layout.dialog_fragment_about, null);
 		aboutBodyView.setText(aboutBody);
 		aboutBodyView.setMovementMethod(new LinkMovementMethod());
 

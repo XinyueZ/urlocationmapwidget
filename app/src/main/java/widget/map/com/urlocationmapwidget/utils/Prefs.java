@@ -125,6 +125,10 @@ public final class Prefs extends BasicPrefs {
 	 * Url for place-api of Baidu Inc.
 	 */
 	private static final String KEY_BAIDU_PLACE = "baidu_place";
+	/**
+	 * Did the app show the FB-info.
+	 */
+	private static final String KEY_FB_INFO_SHOWN = "fb_info_shown";
 
 	/**
 	 * Created a DeviceData storage.
@@ -483,5 +487,21 @@ public final class Prefs extends BasicPrefs {
 		} else {
 			return String.format(getUrlBaiduPlace(), latlng.latitude + "", latlng.longitude + ""  );
 		}
+	}
+
+	/**
+	 * Set shown FB-info or not.
+	 * @param shown {@code true} if has shown.
+	 */
+	public void setHasShownFBInfo(boolean shown) {
+		setBoolean(KEY_FB_INFO_SHOWN, shown);
+	}
+
+	/**
+	 * Shown FB-info or not?
+	 * @return {@code true} if has shown.
+	 */
+	public boolean hasShownFBInfo() {
+		return getBoolean(KEY_FB_INFO_SHOWN, false);
 	}
 }

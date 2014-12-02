@@ -31,6 +31,7 @@
     <string name="msg_refresh_plz">Please refresh or start locating.</string>
     <string name="msg_fb_post">Post on Facebook…</string>
     <string name="msg_fb_post_error">Error while posting on Facebook.</string>
+    <string name="msg_fb_prompt">One Button-Click! You can now share your location on Facebook directly.</string>
 
     <string name="menu_share_app">Share this</string>
     <string name="menu_about">About</string>

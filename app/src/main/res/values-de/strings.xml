@@ -39,5 +39,6 @@
     <string name="lbl_here">Ich bin hier: %1$s</string>
     <string name="msg_fb_post">Poste auf Facebook…</string>
     <string name="msg_fb_post_error">Ein Fehler trefft, während ich auf Facebook poste.</string>
+    <string name="msg_fb_prompt">Mit einem Klicken. Du kannst jetzt deine Location auf Facebook teilen.</string>
 
 </resources>

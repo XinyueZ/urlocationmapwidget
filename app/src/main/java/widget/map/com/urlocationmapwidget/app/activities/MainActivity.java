@@ -31,6 +31,7 @@ import com.google.android.gms.common.GooglePlayServicesUtil;
 
 import widget.map.com.urlocationmapwidget.app.fragments.AboutDialogFragment;
 import widget.map.com.urlocationmapwidget.app.fragments.AppListImplFragment;
+import widget.map.com.urlocationmapwidget.app.fragments.FbInfoDialogFragment;
 import widget.map.com.urlocationmapwidget.utils.Prefs;
 import widget.map.com.urlocationmapwidget.R;
 import widget.map.com.urlocationmapwidget.utils.Utils;
@@ -115,6 +116,10 @@ public final class MainActivity extends BaseActivity {
 		((RadioButton) findViewById(R.id.baidu_radio)).setChecked(Prefs.getInstance(getApplication()).getCurrentMap() ==
 				1);
 		initDrawer();
+
+		if(!Prefs.getInstance(getApplication()).hasShownFBInfo()) {
+			showDialogFragment(FbInfoDialogFragment.newInstance(this), null);
+		}
 	}
 
 	@Override
