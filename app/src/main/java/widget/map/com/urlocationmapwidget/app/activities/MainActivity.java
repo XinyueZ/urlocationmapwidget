@@ -29,11 +29,13 @@ import com.crashlytics.android.Crashlytics;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 
+import widget.map.com.urlocationmapwidget.R;
 import widget.map.com.urlocationmapwidget.app.fragments.AboutDialogFragment;
 import widget.map.com.urlocationmapwidget.app.fragments.AppListImplFragment;
 import widget.map.com.urlocationmapwidget.app.fragments.FbInfoDialogFragment;
+import widget.map.com.urlocationmapwidget.bus.EULAConfirmedEvent;
+import widget.map.com.urlocationmapwidget.bus.EULARejectEvent;
 import widget.map.com.urlocationmapwidget.utils.Prefs;
-import widget.map.com.urlocationmapwidget.R;
 import widget.map.com.urlocationmapwidget.utils.Utils;
 
 import static widget.map.com.urlocationmapwidget.appwidgets.UrLocationWidgetProvider.ACTION_ENABLE_LOCATING;
@@ -72,6 +74,7 @@ public final class MainActivity extends BaseActivity {
 	//------------------------------------------------
 	//Subscribes, event-handlers
 	//------------------------------------------------
+
 	/**
 	 * Handler for {@link CloseDrawerEvent}.
 	 *
@@ -81,6 +84,7 @@ public final class MainActivity extends BaseActivity {
 	public void onEvent(CloseDrawerEvent e) {
 		mDrawerLayout.closeDrawers();
 	}
+
 	/**
 	 * Event, open an external app that has been installed.
 	 *
@@ -91,7 +95,30 @@ public final class MainActivity extends BaseActivity {
 		com.chopping.utils.Utils.linkToExternalApp(this, e.getAppListItem());
 	}
 
+
+	/**
+	 * Handler for {@link  EULARejectEvent}.
+	 *
+	 * @param e
+	 * 		Event {@link  EULARejectEvent}.
+	 */
+	public void onEvent(EULARejectEvent e) {
+		finish();
+	}
+
+	/**
+	 * Handler for {@link EULAConfirmedEvent}
+	 *
+	 * @param e
+	 * 		Event {@link  EULAConfirmedEvent}.
+	 */
+	public void onEvent(EULAConfirmedEvent e) {
+		showFbInfo();
+	}
+
 	//------------------------------------------------
+
+
 	/**
 	 * Show single instance of {@link MainActivity}
 	 *
@@ -117,9 +144,7 @@ public final class MainActivity extends BaseActivity {
 				1);
 		initDrawer();
 
-		if(!Prefs.getInstance(getApplication()).hasShownFBInfo()) {
-			showDialogFragment(FbInfoDialogFragment.newInstance(this), null);
-		}
+
 	}
 
 	@Override
@@ -150,6 +175,9 @@ public final class MainActivity extends BaseActivity {
 			mDrawerToggle.syncState();
 		}
 
+		showFbInfo();
+
+//		showHashKey(this);
 	}
 
 	@Override
@@ -218,8 +246,7 @@ public final class MainActivity extends BaseActivity {
 			actionBar.setHomeButtonEnabled(true);
 			actionBar.setDisplayHomeAsUpEnabled(true);
 			mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-			mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,  R.string.app_name,
-					R.string.app_name) {
+			mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout, R.string.app_name, R.string.app_name) {
 				@Override
 				public void onDrawerSlide(View drawerView, float slideOffset) {
 					super.onDrawerSlide(drawerView, slideOffset);
@@ -247,8 +274,7 @@ public final class MainActivity extends BaseActivity {
 		getMenuInflater().inflate(MENU, menu);
 		MenuItem menuShare = menu.findItem(R.id.action_share_app);
 
-		ShareActionProvider provider =
-				(ShareActionProvider) MenuItemCompat.getActionProvider(menuShare);
+		ShareActionProvider provider = (ShareActionProvider) MenuItemCompat.getActionProvider(menuShare);
 
 		String subject = getString(R.string.lbl_introduce_app);
 		String text = getString(R.string.lbl_share_app_content);
@@ -304,4 +330,27 @@ public final class MainActivity extends BaseActivity {
 		}
 	}
 
+	/**
+	 * Some information about sharing on the Facebook Inc.
+	 */
+	private void showFbInfo() {
+		Prefs prefs = Prefs.getInstance(getApplication());
+		if (prefs.isEULAOnceConfirmed() && !Prefs.getInstance(getApplication()).hasShownFBInfo()) {
+			showDialogFragment(FbInfoDialogFragment.newInstance(this), null);
+		}
+	}
+
+//	static void showHashKey(Context context) {
+//		try {
+//			PackageInfo info = context.getPackageManager().getPackageInfo(
+//					"widget.map.com.urlocationmapwidget", PackageManager.GET_SIGNATURES);
+//			for (Signature signature : info.signatures) {
+//				MessageDigest md = MessageDigest.getInstance("SHA");
+//				md.update(signature.toByteArray());
+//				Log.i("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
+//			}
+//		} catch (NameNotFoundException e) {
+//		} catch (NoSuchAlgorithmException e) {
+//		}
+//	}
 }

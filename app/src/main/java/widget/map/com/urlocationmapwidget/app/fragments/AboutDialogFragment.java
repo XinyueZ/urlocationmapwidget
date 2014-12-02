@@ -1,7 +1,6 @@
 package widget.map.com.urlocationmapwidget.app.fragments;
 
 import android.app.AlertDialog;
-import android.app.Application;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -23,8 +22,11 @@ import android.view.View;
 import android.webkit.WebView;
 import android.widget.TextView;
 
-import widget.map.com.urlocationmapwidget.utils.Prefs;
+import de.greenrobot.event.EventBus;
 import widget.map.com.urlocationmapwidget.R;
+import widget.map.com.urlocationmapwidget.bus.EULAConfirmedEvent;
+import widget.map.com.urlocationmapwidget.bus.EULARejectEvent;
+import widget.map.com.urlocationmapwidget.utils.Prefs;
 
 
 /**
@@ -237,16 +239,15 @@ public final class AboutDialogFragment extends DialogFragment {
 			return new AlertDialog.Builder(getActivity()).setTitle(R.string.about_eula).setView(eulaTextView)
 					.setPositiveButton(R.string.btn_agree, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton) {
-							Prefs prefs = Prefs.getInstance(getActivity().getApplication());
-							Application cxt = getActivity().getApplication();
-							prefs.setEULAOnceConfirmed(true);
-							dialog.dismiss();
+							Prefs.getInstance(getActivity().getApplication()).setEULAOnceConfirmed(true);
+							dismiss();
+							EventBus.getDefault().post(new EULAConfirmedEvent());
 						}
 					}).setNegativeButton(R.string.btn_not_agree, new DialogInterface.OnClickListener() {
 						public void onClick(DialogInterface dialog, int whichButton) {
-							Application cxt = getActivity().getApplication();
-							Prefs.getInstance(cxt).setEULAOnceConfirmed(false);
-							getActivity().finish();
+							Prefs.getInstance(getActivity().getApplication()).setEULAOnceConfirmed(false);
+							dismiss();
+							EventBus.getDefault().post(new EULARejectEvent());
 						}
 					}).create();
 		}

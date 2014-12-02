@@ -61,5 +61,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="applicationId">1511309452456948</string>
+    <string name="interstitial_ad_unit_id">ca-app-pub-9133982521997162/4611212536</string>
 
 </resources>
