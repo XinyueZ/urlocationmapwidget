@@ -47,6 +47,10 @@ import widget.map.com.urlocationmapwidget.app.services.UrLocationWidgetService;
  */
 public final class App extends Application {
 	/**
+	 * Make url to place short.
+	 */
+	public static final String TINY = "http://tinyurl.com/api-create.php?url=";
+	/**
 	 * Instance of this application.
 	 */
 	private static App sIns;

@@ -11,15 +11,22 @@ import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.chopping.net.TaskHelper;
+import com.chopping.utils.Utils;
 import com.facebook.Request;
+import com.facebook.Request.Callback;
 import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.ProfilePictureView;
+import com.google.android.gms.maps.model.LatLng;
 
 import widget.map.com.urlocationmapwidget.R;
+import widget.map.com.urlocationmapwidget.app.App;
 import widget.map.com.urlocationmapwidget.utils.Prefs;
 
 /**
@@ -46,11 +53,16 @@ public class FBCheckInActivity extends Activity {
 	 */
 	private TextView mContentTv;
 	/**
+	 * Info shows that there's no location-info.
+	 */
+	private View mNoLocationV;
+	/**
 	 * Permissions for this app-FB-usage.
 	 */
 	private static final List<String> PERMISSIONS = new ArrayList<String>() {
 		{
 			add("public_profile");
+			add("publish_actions");
 		}
 	};
 	/**
@@ -86,6 +98,7 @@ public class FBCheckInActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(LAYOUT);
 		mContentTv = (TextView) findViewById(R.id.check_in_content_tv);
+		mNoLocationV = findViewById(R.id.on_location_tv);
 		mUserPicIv = (ProfilePictureView) findViewById(R.id.selection_profile_pic);
 		mUserPicIv.setCropped(true);
 		mUiLifecycleHelper = new UiLifecycleHelper(this, callback);
@@ -93,22 +106,17 @@ public class FBCheckInActivity extends Activity {
 
 		//Show a user name to confirm that FB connection has been established.
 		Session session = Session.getActiveSession();
-		if (session == null ||
-				!session.isOpened()) {
-			Session.openActiveSession(
-					this,
-					true,
-					PERMISSIONS,
-					new Session.StatusCallback() {
-						@Override
-						public void call(Session session, SessionState state, Exception exception) {
-							if(state == SessionState.CLOSED_LOGIN_FAILED) {
-								finish();
-							} else {
-								makeUserInfoRequest(session);
-							}
-						}
-					});
+		if (session == null || !session.isOpened()) {
+			Session.openActiveSession(this, true, PERMISSIONS, new Session.StatusCallback() {
+				@Override
+				public void call(Session session, SessionState state, Exception exception) {
+					if (state == SessionState.CLOSED_LOGIN_FAILED) {
+						finish();
+					} else {
+						makeUserInfoRequest(session);
+					}
+				}
+			});
 		} else {
 			makeUserInfoRequest(session);
 		}
@@ -133,14 +141,27 @@ public class FBCheckInActivity extends Activity {
 	public void confirm(View view) {
 		//TODO share and checkIn on the Facebook Inc.
 		Prefs prefs = Prefs.getInstance(getApplication());
-		String latlng =  prefs.getLastLocation();
+		String latlng = prefs.getLastLocation();
 
-		if(TextUtils.isEmpty(latlng)) {
+		if (TextUtils.isEmpty(latlng)) {
+			Utils.showLongToast(this, R.string.msg_refresh_plz);
 			return;
 		}
 		String[] latlngs = latlng.split(",");
-		Double.parseDouble(latlngs[0]);
-		Double.parseDouble(latlngs[1]);
+		//Do checkIn.
+		Session session = Session.getActiveSession();
+		makePostWallRequest(session, latlngs[0], latlngs[1], prefs.getLastLocationName());
+	}
+
+	/**
+	 * Locating.
+	 *
+	 * @param view
+	 * 		No used.
+	 */
+	public void locating(View view) {
+		mNoLocationV.setVisibility(View.GONE);
+		widget.map.com.urlocationmapwidget.utils.Utils.startOrRefreshLocating(this);
 	}
 
 	@Override
@@ -176,23 +197,69 @@ public class FBCheckInActivity extends Activity {
 
 	/**
 	 * A FB-Request to get user information.
-	 * @param session A FB-session.
+	 *
+	 * @param session
+	 * 		A FB-session.
 	 */
 	private void makeUserInfoRequest(final Session session) {
 		Request request = Request.newMeRequest(session, new Request.GraphUserCallback() {
+			@Override
+			public void onCompleted(GraphUser user, Response response) {
+				// If the response is successful
+				if (session == Session.getActiveSession()) {
+					if (user != null) {
+						String info = String.format(getString(R.string.lbl_confirm_check_in), user.getName());
+						mContentTv.setVisibility(View.VISIBLE);
+						mContentTv.setText(info);
+						mUserPicIv.setProfileId(user.getId());
+
+						Prefs prefs = Prefs.getInstance(getApplication());
+						String latlng = prefs.getLastLocation();
+						if (TextUtils.isEmpty(latlng)) {
+							mNoLocationV.setVisibility(View.VISIBLE);
+						}
+					}
+				}
+			}
+		});
+		request.executeAsync();
+	}
+
+	/**
+	 * Do checkIn on the Facebook Inc.
+	 *
+	 * @param session
+	 * 		Current FB-session.
+	 * @param lat
+	 * 		The latitude.
+	 * @param lng
+	 * 		The longitude.
+	 * @param locationName
+	 * 		The name of current location.
+	 */
+	private void makePostWallRequest(final Session session, String lat, String lng, final String locationName) {
+		LatLng ll = new LatLng(Double.parseDouble(lat), Double.parseDouble(lng));
+		StringRequest tinyReq = new StringRequest(com.android.volley.Request.Method.GET, App.TINY + Prefs.getInstance(
+				getApplication()).getUrlPlace(ll), new com.android.volley.Response.Listener<String>() {
+			@Override
+			public void onResponse(String response) {
+				Request request = Request.newStatusUpdateRequest(session, response + locationName, new Callback() {
 					@Override
-					public void onCompleted(GraphUser user, Response response) {
-						// If the response is successful
-						if (session == Session.getActiveSession()) {
-							if (user != null) {
-								String info = String.format(getString(R.string.lbl_confirm_check_in), user.getName());
-								mContentTv.setVisibility(View.VISIBLE);
-								mContentTv.setText(info);
-								mUserPicIv.setProfileId(user.getId());
-							}
+					public void onCompleted(Response response) {
+						if (response != null) {
+							finish();
 						}
 					}
 				});
-		request.executeAsync();
+				request.executeAsync();
+			}
+		}, new com.android.volley.Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError error) {
+			}
+		});
+		TaskHelper.getRequestQueue().add(tinyReq);
 	}
+
+
 }

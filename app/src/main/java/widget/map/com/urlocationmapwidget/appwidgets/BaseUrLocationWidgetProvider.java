@@ -19,6 +19,7 @@ import com.chopping.net.TaskHelper;
 import com.google.android.gms.maps.model.LatLng;
 
 import widget.map.com.urlocationmapwidget.R;
+import widget.map.com.urlocationmapwidget.app.App;
 import widget.map.com.urlocationmapwidget.app.activities.FBCheckInActivity;
 import widget.map.com.urlocationmapwidget.app.activities.MainActivity;
 import widget.map.com.urlocationmapwidget.app.activities.ProgressBarActivity;
@@ -33,10 +34,6 @@ import widget.map.com.urlocationmapwidget.utils.Utils;
  * @author Xinyue Zhao
  */
 public abstract class BaseUrLocationWidgetProvider extends AppWidgetProvider {
-	/**
-	 * Make url to place short.
-	 */
-	private static final String TINY = "http://tinyurl.com/api-create.php?url=";
 	/**
 	 * Click event action for open setting.
 	 */
@@ -153,7 +150,7 @@ public abstract class BaseUrLocationWidgetProvider extends AppWidgetProvider {
 						Double.parseDouble(latlngs[0]),
 						Double.parseDouble(latlngs[1])
 				);
-				StringRequest request = new StringRequest(Request.Method.GET, TINY + prefs.getUrlPlace(ll), new Response.Listener<String>() {
+				StringRequest request = new StringRequest(Request.Method.GET, App.TINY + prefs.getUrlPlace(ll), new Response.Listener<String>() {
 					@Override
 					public void onResponse(String response) {
 						if(appRef != null && appRef.get() != null) {

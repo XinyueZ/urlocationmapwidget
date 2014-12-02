@@ -33,5 +33,8 @@
     <string name="btn_agree">Stimme zu.</string>
     <string name="btn_not_agree">Stimme nicht zu.</string>
     <string name="lbl_confirm_check_in">Hallo %s, bist Du sicher, auf Facebook einzuchecken, deine Location zu teilen?</string>
+    <string name="msg_refresh_plz">Bitte erst aktualisieren oder lokalisieren.</string>
+    <string name="btn_locating">Lokalisiere</string>
+    <string name="lbl_no_location">Du hast moment keine Location-Info, bitte lokalisieren!</string>
 
 </resources>

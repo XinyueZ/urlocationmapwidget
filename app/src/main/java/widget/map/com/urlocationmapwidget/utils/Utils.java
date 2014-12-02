@@ -3,6 +3,7 @@ package widget.map.com.urlocationmapwidget.utils;
 import android.content.Context;
 import android.content.Intent;
 
+import widget.map.com.urlocationmapwidget.app.services.BaseService;
 import widget.map.com.urlocationmapwidget.app.services.UrLocationSmallWidgetService;
 import widget.map.com.urlocationmapwidget.app.services.UrLocationWidgetService;
 
@@ -33,6 +34,23 @@ public final class Utils {
 		} else {
 			context.stopService(new Intent(context, UrLocationWidgetService.class));
 			context.stopService(new Intent(context, UrLocationSmallWidgetService.class));
+		}
+	}
+
+	/**
+	 * Start or refresh the {@link widget.map.com.urlocationmapwidget.app.services.UrLocationWidgetService}  and {@link widget.map.com.urlocationmapwidget.app.services.UrLocationSmallWidgetService}to require current location
+	 * with different priorities.
+	 *
+	 * @param context
+	 * 		{@link android.content.Context}.
+	 */
+	public static void startOrRefreshLocating(Context context) {
+		Prefs prefs = Prefs.getInstance(context.getApplicationContext());
+		if (!prefs.isLocationUpdating()) {
+			context.startService(new Intent(context, UrLocationWidgetService.class));
+			context.startService(new Intent(context, UrLocationSmallWidgetService.class));
+		} else {
+			context.sendBroadcast(new Intent(BaseService.ACTION_UPDATE));
 		}
 	}
 

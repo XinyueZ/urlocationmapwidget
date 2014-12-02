@@ -17,6 +17,7 @@
     <string name="lbl_share_your_location">\n\n---------\nFrom my Android Handy.\nI\'m here:%1$s\n%2$s.</string>
     <string name="lbl_play_service">This application needs Google Play Service, you must install it first.</string>
     <string name="lbl_confirm_check_in">Hi %s, do you want to do Check-In on your Facebook page to share your current location?</string>
+    <string name="lbl_no_location">You haven\'t an location information at moment, please locate!</string>
     <string-array name="array_priorities">
         <item>Fine, best, high accuracy</item>
         <item>Balanced power accuracy</item>
@@ -26,6 +27,7 @@
     <string name="msg_locate">Locating…</string>
     <string name="msg_stop_locate">Stop locating your position…</string>
     <string name="msg_sharing">Your location will be shared…</string>
+    <string name="msg_refresh_plz">Please refresh or start locating.</string>
     <string name="menu_share_app" translatable="false">Share this</string>
     <string name="menu_about">About</string>
 
@@ -47,6 +49,8 @@
     <string name="btn_cancel">Cancel</string>
     <string name="btn_agree">I agree.</string>
     <string name="btn_not_agree">I do not agree.</string>
+    <string name="btn_locating">Locating</string>
+
     <string name="play_service_url">market://details?id=com.google.android.gms</string>
     <string name="title_activity_fbcheck_in">FB CheckIn</string>
     <string name="hello_world">Hello world!</string>

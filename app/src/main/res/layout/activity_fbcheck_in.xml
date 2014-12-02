@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_gravity="center"
             android:gravity="center_horizontal"
-            facebook:preset_size="small" />
+            facebook:preset_size="normal" />
     </FrameLayout>
 
     <TextView
@@ -30,9 +30,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
+    <TextView
+        android:id="@+id/on_location_tv"
+        android:visibility="gone"
+        android:text="@string/lbl_no_location"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/no_location_warning"/>
+
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:weightSum="2"
+        android:weightSum="3"
         android:layout_height="wrap_content">
 
         <Button
@@ -48,5 +57,11 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:onClick="confirm" />
+        <Button
+            android:text="@string/btn_locating"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:onClick="locating" />
     </LinearLayout>
 </LinearLayout>
