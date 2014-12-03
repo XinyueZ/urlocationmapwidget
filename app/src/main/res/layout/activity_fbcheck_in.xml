@@ -1,6 +1,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    xmlns:facebook="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:paddingLeft="@dimen/activity_horizontal_margin"
@@ -20,7 +20,7 @@
             android:layout_width="wrap_content"
             android:layout_gravity="center"
             android:gravity="center_horizontal"
-            facebook:preset_size="normal" />
+            app:preset_size="normal" />
     </FrameLayout>
 
     <TextView
@@ -36,8 +36,30 @@
         android:text="@string/lbl_no_location"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textColor="@color/no_location_warning"/>
+        android:textColor="@color/no_location_warning" />
 
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/login_status_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:text="@string/lbl_login_status"
+         />
+        <android.support.v7.widget.SwitchCompat
+            android:id="@+id/sign_sw"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textOff="@string/lbl_logout"
+            android:textOn="@string/lbl_login"
+            android:checked="true"
+            android:enabled="false"
+            android:visibility="visible" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -50,19 +72,23 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:onClick="cancel"
-            android:textSize="13sp"/>
+            android:textSize="13sp" />
 
         <Button
+            android:id="@+id/confirm_btn"
             android:text="@string/btn_confirm"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:onClick="confirm"     android:textSize="13sp"/>
+            android:onClick="confirm"
+            android:textSize="13sp" />
+
         <Button
             android:text="@string/btn_locating"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:onClick="locating"     android:textSize="13sp" />
+            android:onClick="locating"
+            android:textSize="13sp" />
     </LinearLayout>
 </LinearLayout>

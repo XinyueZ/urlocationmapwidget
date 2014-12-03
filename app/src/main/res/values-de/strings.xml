@@ -40,5 +40,8 @@
     <string name="msg_fb_post">Poste auf Facebook…</string>
     <string name="msg_fb_post_error">Ein Fehler trefft, während ich auf Facebook poste.</string>
     <string name="msg_fb_prompt">Mit einem Klicken. Du kannst jetzt deine Location auf Facebook teilen.</string>
+    <string name="lbl_login">Login</string>
+    <string name="lbl_logout">Logout</string>
+    <string name="lbl_login_status">Zustand:</string>
 
 </resources>

@@ -8,14 +8,19 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.chopping.application.LL;
 import com.chopping.net.TaskHelper;
 import com.chopping.utils.Utils;
+import com.facebook.AppEventsLogger;
 import com.facebook.Request;
 import com.facebook.Request.Callback;
 import com.facebook.Response;
@@ -46,10 +51,6 @@ public class FBCheckInActivity extends Activity {
 	 */
 	private UiLifecycleHelper mUiLifecycleHelper;
 	/**
-	 * The activity-code for returning from auth-activity of FB-SDK.
-	 */
-	private static final int REAUTH_ACTIVITY_CODE = 100;
-	/**
 	 * Some content of information of checkIn.
 	 */
 	private TextView mContentTv;
@@ -58,11 +59,18 @@ public class FBCheckInActivity extends Activity {
 	 */
 	private View mNoLocationV;
 	/**
-	 * Permissions for this app-FB-usage.
+	 * Permissions for user-info of this app-FB-usage.
 	 */
-	private static final List<String> PERMISSIONS = new ArrayList<String>() {
+	private static final List<String> PROFILE_PERMISSIONS = new ArrayList<String>() {
 		{
 			add("public_profile");
+		}
+	};
+	/**
+	 * Permissions for publish of this app-FB-usage.
+	 */
+	private static final List<String> PUBLISH_PERMISSIONS = new ArrayList<String>() {
+		{
 			add("publish_actions");
 		}
 	};
@@ -71,20 +79,42 @@ public class FBCheckInActivity extends Activity {
 	 */
 	private ProfilePictureView mUserPicIv;
 	/**
+	 * A switch for sign-in-out.
+	 */
+	private SwitchCompat mSignSw;
+	/**
 	 * FB-Session listener.
 	 */
 	private Session.StatusCallback callback = new Session.StatusCallback() {
 		@Override
 		public void call(final Session session, final SessionState state, final Exception exception) {
 			if (session != null && session.isOpened()) {
-				makeUserInfoRequest(session);
+				switch (mStatus) {
+				case Login:
+					makeUserInfoRequest(session);mStatus = null;
+				break;
+				case Publish:
+					makePostWallRequest(session); mStatus = null;
+					break;
+				}
 			}
+			LL.d(session.toString());
 		}
 	};
 	/**
 	 * Progress indicator.
 	 */
 	private ProgressDialog mPb;
+	/**
+	 * A view that can be clicked to send info on Facebook Inc.
+	 */
+	private View mConfirmV;
+
+	private enum Status {
+		Login, Publish
+	}
+
+	private Status mStatus;
 	/**
 	 * Show single instance of {@link FBCheckInActivity}
 	 *
@@ -107,23 +137,51 @@ public class FBCheckInActivity extends Activity {
 		mUserPicIv.setCropped(true);
 		mUiLifecycleHelper = new UiLifecycleHelper(this, callback);
 		mUiLifecycleHelper.onCreate(savedInstanceState);
+		mConfirmV = findViewById(R.id.confirm_btn);
 
-		//Show a user name to confirm that FB connection has been established.
+		fbLogin();
+		mSignSw = (SwitchCompat) findViewById(R.id.sign_sw);
+		mSignSw.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+				if (!isChecked) {
+					fbLogout();
+				} else {
+					fbLogin();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Logout.
+	 */
+	private void fbLogout() {
+		Session session = Session.getActiveSession();
+		if (session != null) {
+			session.closeAndClearTokenInformation();
+		}
+		Session.setActiveSession(null);
+		mConfirmV.setEnabled(false);
+	}
+
+	/**
+	 * Login. Show a user name to confirm that FB connection has been established.
+	 */
+	private void fbLogin() {
+		mStatus = Status.Login;
 		Session session = Session.getActiveSession();
 		if (session == null || !session.isOpened()) {
-			session = new Session(this);
-			Session.setActiveSession(session);
-			session.openForPublish(new Session.OpenRequest(this).setPermissions(PERMISSIONS).setCallback(
-					new Session.StatusCallback() {
-						@Override
-						public void call(Session session, SessionState state, Exception exception) {
-							if (state == SessionState.CLOSED_LOGIN_FAILED) {
-								finish();
-							} else {
-								makeUserInfoRequest(session);
-							}
-						}
-					}));
+			Session.openActiveSession(this, true, PROFILE_PERMISSIONS, new Session.StatusCallback() {
+				@Override
+				public void call(Session session, SessionState state, Exception exception) {
+					if (state == SessionState.CLOSED_LOGIN_FAILED) {
+						finish();
+					} else {
+						makeUserInfoRequest(session);
+					}
+				}
+			});
 		} else {
 			makeUserInfoRequest(session);
 		}
@@ -146,18 +204,49 @@ public class FBCheckInActivity extends Activity {
 	 * 		No used.
 	 */
 	public void confirm(View view) {
-		//TODO share and checkIn on the Facebook Inc.
+		mStatus = Status.Publish;
+		Session session = Session.getActiveSession();
+		if (session != null) {
+			if (hasPublishPermission()) {
+				makePostWallRequest(session);
+			} else if (session.isOpened()) {
+				session.requestNewPublishPermissions(new Session.NewPermissionsRequest(this, PUBLISH_PERMISSIONS));
+			}
+		}
+	}
+
+	/**
+	 * Publish location to Facebook Inc.
+	 * @param session Current FB-session.
+	 */
+	private void makePostWallRequest(Session session) {
 		Prefs prefs = Prefs.getInstance(getApplication());
 		String latlng = prefs.getLastLocation();
-
 		if (TextUtils.isEmpty(latlng)) {
 			Utils.showLongToast(this, R.string.msg_refresh_plz);
-			return;
+		}  else {
+			String[] latlngs = latlng.split(",");
+			makePostWallRequest(session, latlngs[0], latlngs[1], prefs.getLastLocationName());
+//			makePostWallRequest(session, 37.42291810 + "", -122.08542120 + "", "1600 Amphitheatre Pkwy, Mountain View, CA 94043, USA");
 		}
-		String[] latlngs = latlng.split(",");
-		//Do checkIn.
+	}
+
+
+	@Override
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		mUiLifecycleHelper.onActivityResult(requestCode, resultCode, data);
+	}
+
+
+	/**
+	 * To know whether the permission for publishing available or not.
+	 *
+	 * @return {@code true} if you can publish.
+	 */
+	private boolean hasPublishPermission() {
 		Session session = Session.getActiveSession();
-		makePostWallRequest(session, latlngs[0], latlngs[1], prefs.getLastLocationName());
+		return session != null && session.getPermissions().contains("publish_actions");
 	}
 
 	/**
@@ -175,6 +264,7 @@ public class FBCheckInActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 		mUiLifecycleHelper.onResume();
+		AppEventsLogger.activateApp(this);
 	}
 
 	@Override
@@ -187,19 +277,13 @@ public class FBCheckInActivity extends Activity {
 	public void onPause() {
 		super.onPause();
 		mUiLifecycleHelper.onPause();
+		AppEventsLogger.deactivateApp(this);
 	}
 
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
 		mUiLifecycleHelper.onDestroy();
-	}
-
-	@Override
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		super.onActivityResult(requestCode, resultCode, data);
-		Session.getActiveSession().onActivityResult(this, requestCode, resultCode, data);
-		mUiLifecycleHelper.onActivityResult(requestCode, resultCode, data);
 	}
 
 	/**
@@ -212,7 +296,7 @@ public class FBCheckInActivity extends Activity {
 		Request request = Request.newMeRequest(session, new Request.GraphUserCallback() {
 			@Override
 			public void onCompleted(GraphUser user, Response response) {
-				// If the response is successful
+				// If the response is successful.
 				if (session == Session.getActiveSession()) {
 					if (user != null) {
 						String info = String.format(getString(R.string.lbl_confirm_check_in), user.getName());
@@ -225,6 +309,9 @@ public class FBCheckInActivity extends Activity {
 						if (TextUtils.isEmpty(latlng)) {
 							mNoLocationV.setVisibility(View.VISIBLE);
 						}
+						mSignSw.setVisibility(View.VISIBLE);
+						mSignSw.setEnabled(true);
+						mConfirmV.setEnabled(true);
 					}
 				}
 			}
@@ -251,17 +338,17 @@ public class FBCheckInActivity extends Activity {
 				getApplication()).getUrlPlace(ll), new com.android.volley.Response.Listener<String>() {
 			@Override
 			public void onResponse(String link) {
-				if (session != null &&  session.isOpened()) {
+				if (session != null && session.isOpened()) {
 					String fmt = getString(R.string.lbl_here);
-					String desc = String.format(fmt, locationName );
+					String desc = String.format(fmt, locationName);
 					Request request = Request.newStatusUpdateRequest(session, desc, new Callback() {
 						@Override
 						public void onCompleted(Response response) {
 							if (response != null) {
-								if(mPb!= null&& mPb.isShowing()) {
+								if (mPb != null && mPb.isShowing()) {
 									mPb.dismiss();
 								}
-								if(response.getError() != null) {
+								if (response.getError() != null) {
 									Utils.showLongToast(getApplication(), R.string.msg_fb_post_error);
 								}
 								finish();
@@ -270,7 +357,7 @@ public class FBCheckInActivity extends Activity {
 					});
 					Bundle postParams = new Bundle();
 					postParams.putString("description", desc);
-					postParams.putString("link", link );
+					postParams.putString("link", link);
 					request.setParameters(postParams);
 					request.executeAsync();
 				}
