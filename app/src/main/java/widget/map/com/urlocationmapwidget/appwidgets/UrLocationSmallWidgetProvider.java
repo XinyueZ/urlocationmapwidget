@@ -1,7 +1,6 @@
 package widget.map.com.urlocationmapwidget.appwidgets;
 
 import android.appwidget.AppWidgetManager;
-import android.content.ComponentName;
 import android.content.Context;
 import android.widget.RemoteViews;
 
@@ -16,21 +15,18 @@ public final class UrLocationSmallWidgetProvider extends BaseUrLocationWidgetPro
 	/**
 	 * Layout of the widget.
 	 */
-	private static final int LAYOUT_WIDGET = R.layout.small_widget_urlocation;
+	public static final int LAYOUT_WIDGET = R.layout.small_widget_urlocation;
 
 	@Override
 	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 		super.onUpdate(context, appWidgetManager, appWidgetIds);
-		ComponentName thisWidget = new ComponentName(context, getClass());
-		int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
-		RemoteViews views;
-		for (int i = 0; i < allWidgetIds.length; i++) {
-			views = new RemoteViews(context.getPackageName(), getLayoutResId());
-			views.setOnClickPendingIntent(R.id.buttons_ll, buildViewClickIntent(context, ACTION_CLICK_MAP));
-			appWidgetManager.updateAppWidget(thisWidget, views);
-		}
+		doUpdate(context, appWidgetManager, appWidgetIds);
 	}
 
+	@Override
+	protected void doMoreUpdate(Context context, RemoteViews parent) {
+		parent.setOnClickPendingIntent(R.id.buttons_ll, buildViewClickIntent(context, ACTION_CLICK_MAP));
+	}
 
 	@Override
 	protected int getLayoutResId() {

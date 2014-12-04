@@ -77,10 +77,13 @@ public abstract class BaseUrLocationWidgetProvider extends AppWidgetProvider {
 	 */
 	private static final String ACTION_FB_CHECK_IN = "widget.map.com.urlocationmapwidget.FB_CHECK_IN";
 
-	@Override
-	public void onUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
-		super.onUpdate(context, appWidgetManager, appWidgetIds);
-
+	/**
+	 * Do widget update.
+	 * @param context
+	 * @param appWidgetManager
+	 * @param appWidgetIds
+	 */
+	protected void doUpdate(Context context, AppWidgetManager appWidgetManager, int[] appWidgetIds) {
 		ComponentName thisWidget = new ComponentName(context, getClass());
 		int[] allWidgetIds = appWidgetManager.getAppWidgetIds(thisWidget);
 		RemoteViews views;
@@ -103,9 +106,17 @@ public abstract class BaseUrLocationWidgetProvider extends AppWidgetProvider {
 			views.setOnClickPendingIntent(R.id.share_your_location_btn, buildViewClickIntent(context, ACTION_SHARE_LOCATION));
 			views.setOnClickPendingIntent(R.id.fb_check_in_btn, buildViewClickIntent(context, ACTION_FB_CHECK_IN));
 
+			doMoreUpdate(context, views);
 			appWidgetManager.updateAppWidget(thisWidget, views);
 		}
 	}
+
+	/**
+	 * More UI on widget to update.
+	 * @param context {@link android.content.Context}.
+	 * @param parent The host of UI.
+	 */
+	protected abstract void doMoreUpdate(Context context, RemoteViews parent);
 
 	@Override
 	public void onReceive(Context context, Intent intent) {

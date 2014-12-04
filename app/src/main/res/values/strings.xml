@@ -62,8 +62,6 @@
     <string name="action_settings">Settings</string>
     <string name="applicationId">1514880298788301</string>
     <string name="interstitial_ad_unit_id">ca-app-pub-9133982521997162/4611212536</string>
-    <string name="lbl_login_status">Status:</string>
-    <string name="lbl_login">Login</string>
-    <string name="lbl_logout">Logout</string>
+
 
 </resources>

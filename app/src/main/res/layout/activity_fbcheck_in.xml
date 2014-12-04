@@ -25,10 +25,11 @@
 
     <TextView
         android:id="@+id/check_in_content_tv"
-        android:visibility="invisible"
+        android:visibility="gone"
         android:text="@string/lbl_confirm_check_in"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"/>
 
     <TextView
         android:id="@+id/on_location_tv"
@@ -38,28 +39,19 @@
         android:layout_height="wrap_content"
         android:textColor="@color/no_location_warning" />
 
-    <LinearLayout
-        android:orientation="horizontal"
+
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <TextView
-            android:id="@+id/login_status_tv"
-            android:layout_width="wrap_content"
+        <com.facebook.widget.LoginButton
+            android:id="@+id/login_button"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:text="@string/lbl_login_status"
-         />
-        <android.support.v7.widget.SwitchCompat
-            android:id="@+id/sign_sw"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textOff="@string/lbl_logout"
-            android:textOn="@string/lbl_login"
-            android:checked="true"
-            android:enabled="false"
-            android:visibility="visible" />
-    </LinearLayout>
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="30dp"
+            android:layout_marginBottom="30dp"/>
+    </FrameLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -79,6 +71,7 @@
             android:text="@string/btn_confirm"
             android:layout_width="0dp"
             android:layout_weight="1"
+            android:enabled="false"
             android:layout_height="wrap_content"
             android:onClick="confirm"
             android:textSize="13sp" />

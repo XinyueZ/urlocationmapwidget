@@ -48,7 +48,5 @@
     <string name="msg_fb_post">正在联机脸书…</string>
     <string name="msg_fb_post_error">联机脸书过程中出现错误。</string>
     <string name="msg_fb_prompt">一键！你现在可以直接在脸书上分享你的位置了。</string>
-    <string name="lbl_login">登录</string>
-    <string name="lbl_logout">退出</string>
-    <string name="lbl_login_status">状态:</string>
+
 </resources>

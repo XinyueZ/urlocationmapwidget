@@ -8,11 +8,8 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.SwitchCompat;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
 import com.android.volley.VolleyError;
@@ -78,29 +75,7 @@ public class FBCheckInActivity extends Activity {
 	 * Show user's picture on Facebook Inc.
 	 */
 	private ProfilePictureView mUserPicIv;
-	/**
-	 * A switch for sign-in-out.
-	 */
-	private SwitchCompat mSignSw;
-	/**
-	 * FB-Session listener.
-	 */
-	private Session.StatusCallback callback = new Session.StatusCallback() {
-		@Override
-		public void call(final Session session, final SessionState state, final Exception exception) {
-			if (session != null && session.isOpened()) {
-				switch (mStatus) {
-				case Login:
-					makeUserInfoRequest(session);mStatus = null;
-				break;
-				case Publish:
-					makePostWallRequest(session); mStatus = null;
-					break;
-				}
-			}
-			LL.d(session.toString());
-		}
-	};
+
 	/**
 	 * Progress indicator.
 	 */
@@ -110,11 +85,25 @@ public class FBCheckInActivity extends Activity {
 	 */
 	private View mConfirmV;
 
-	private enum Status {
-		Login, Publish
-	}
+	/**
+	 * FB-Session listener.
+	 */
+	private Session.StatusCallback callback = new Session.StatusCallback() {
+		@Override
+		public void call(final Session session, final SessionState state, final Exception exception) {
+			if(session != null) {
+				mConfirmV.setEnabled(  session.isOpened()   );
+				makeUserInfoRequest(session);
+				if(session.isClosed()) {
+					mContentTv.setVisibility(View.GONE);
+				}
+				LL.d(session.toString());
+			}
+		}
+	};
 
-	private Status mStatus;
+
+
 	/**
 	 * Show single instance of {@link FBCheckInActivity}
 	 *
@@ -138,54 +127,15 @@ public class FBCheckInActivity extends Activity {
 		mUiLifecycleHelper = new UiLifecycleHelper(this, callback);
 		mUiLifecycleHelper.onCreate(savedInstanceState);
 		mConfirmV = findViewById(R.id.confirm_btn);
-
-		fbLogin();
-		mSignSw = (SwitchCompat) findViewById(R.id.sign_sw);
-		mSignSw.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-			@Override
-			public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-				if (!isChecked) {
-					fbLogout();
-				} else {
-					fbLogin();
-				}
-			}
-		});
-	}
-
-	/**
-	 * Logout.
-	 */
-	private void fbLogout() {
 		Session session = Session.getActiveSession();
-		if (session != null) {
-			session.closeAndClearTokenInformation();
-		}
-		Session.setActiveSession(null);
-		mConfirmV.setEnabled(false);
-	}
-
-	/**
-	 * Login. Show a user name to confirm that FB connection has been established.
-	 */
-	private void fbLogin() {
-		mStatus = Status.Login;
-		Session session = Session.getActiveSession();
-		if (session == null || !session.isOpened()) {
-			Session.openActiveSession(this, true, PROFILE_PERMISSIONS, new Session.StatusCallback() {
-				@Override
-				public void call(Session session, SessionState state, Exception exception) {
-					if (state == SessionState.CLOSED_LOGIN_FAILED) {
-						finish();
-					} else {
-						makeUserInfoRequest(session);
-					}
-				}
-			});
-		} else {
+		if( session != null) {
+			mConfirmV.setEnabled (session.isOpened()  );
 			makeUserInfoRequest(session);
 		}
 	}
+
+
+
 
 	/**
 	 * Cancel sharing location on the Facebook Inc.
@@ -204,7 +154,6 @@ public class FBCheckInActivity extends Activity {
 	 * 		No used.
 	 */
 	public void confirm(View view) {
-		mStatus = Status.Publish;
 		Session session = Session.getActiveSession();
 		if (session != null) {
 			if (hasPublishPermission()) {
@@ -309,8 +258,6 @@ public class FBCheckInActivity extends Activity {
 						if (TextUtils.isEmpty(latlng)) {
 							mNoLocationV.setVisibility(View.VISIBLE);
 						}
-						mSignSw.setVisibility(View.VISIBLE);
-						mSignSw.setEnabled(true);
 						mConfirmV.setEnabled(true);
 					}
 				}
