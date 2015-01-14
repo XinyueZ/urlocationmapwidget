@@ -24,17 +24,14 @@ android {
         applicationId "widget.map.com.urlocationmapwidget"
         minSdkVersion 14
         targetSdkVersion 21
-        versionCode 12
-        versionName "1.2.4"
+        versionCode 13
+        versionName "1.2.5"
     }
     buildTypes {
         debug {
-            zipAlign true
 //            versionNameSuffix buildNumber
         }
         release {
-            runProguard false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
 
@@ -46,7 +43,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:20.0.0'
+    compile 'com.android.support:appcompat-v7:+'
     compile 'com.google.android.gms:play-services:6.1.11'
     compile project(':volley_cz')
     compile project(':ChoppingBootstrap')
@@ -56,10 +53,10 @@ dependencies {
 
 
 // Rename final apks
-android.applicationVariants.all { variant ->
-    def apk = variant.outputFile
-    def newName = apk.name
-            .replace("_Android", "")
-            .replace(".apk", "-${android.defaultConfig.versionName}${buildNumber}.apk")
-    variant.outputFile = new File(apk.parent, newName)
+android.applicationVariants.all {  variant ->
+    variant.outputs.each  { output ->
+        output.outputFile = new File(
+                output.outputFile.parent, output.outputFile.name.replace("_Android", "")
+                .replace(".apk", "-${android.defaultConfig.versionName}${buildNumber}.apk"))
+    }
 }
